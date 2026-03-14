@@ -1,10 +1,10 @@
-# Kişisel Portföy
+# Kişisel Portfolyo
 
-Bu repository, geliştirdiğim yazılım projelerini ve çalışmalarımı bir arada gösterdiğim kişisel portföyümü içerir. Amaç, farklı alanlarda yaptığım projeleri tek bir yerde toplamak ve incelemek isteyenler için düzenli bir yapı sunmaktır.
+Bu repository, geliştirdiğim yazılım projelerini ve çalışmalarımı bir arada gösterdiğim kişisel portfolyomu içerir. Amaç, farklı alanlarda yaptığım projeleri tek bir yerde toplamak ve incelemek isteyenler için düzenli bir yapı sunmaktır.
 
 ## İçerik
 
-Portföyde yer alan projeler ağırlıklı olarak:
+Portfolyo da yer alan projeler ağırlıklı olarak:
 
 * Deneysel projeler
 * Öğrenme amaçlı geliştirilmiş uygulamalar
@@ -14,7 +14,7 @@ Her proje kendi klasörü içinde yer almakta ve gerekli açıklamalar ilgili pr
 
 ## Amaç
 
-Bu portföyün amacı geliştirdiğim projeleri düzenli bir şekilde sergilemek ve zaman içinde yaptığım çalışmaların gelişimini göstermektir.
+Bu portfolyonun amacı geliştirdiğim projeleri düzenli bir şekilde sergilemek ve zaman içinde yaptığım çalışmaların gelişimini göstermektir.
 
 ## Kullanım
 
