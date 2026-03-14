@@ -19,4 +19,5 @@ Bu portföyün amacı geliştirdiğim projeleri düzenli bir şekilde sergilemek
 ## Kullanım
 
 Repository içerisindeki klasörleri inceleyerek projelerin kaynak kodlarına ve açıklamalarına ulaşabilirsiniz.
+Daha fazla bilgi için iletişime geçebilirsiniz
 
