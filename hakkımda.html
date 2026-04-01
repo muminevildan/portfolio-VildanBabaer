@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımda — Vildan Babaer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Ana Renkler */
+            --cream: #FFFCF8;
+            --soft-pink: #FFE4EC;
+            --dusty-rose: #f596b1;
+            --rose-deep: #D4849C;
+            --sage: #B8D4C0;
+            --sage-light: #D4E8D8;
+            --charcoal: #2C2C2C;
+            --warm-gray: #6B6B6B;
+            --light-gray: #E8E8E8;
+            
+            /* Yeni Feminen Renkler */
+            --lavender: #e2c6ed;
+            --lavender-deep: #c09dd0;
+            --peach: #FFD4C4;
+            --peach-deep: #F5B8A0;
+            --coral: #FFB5A7;
+            --coral-soft: #FFD4CC;
+            --mint: #C4F0E0;
+            --mint-soft: #E0F5EE;
+            --champagne: #F5E6D3;
+            --gold: #E8D4A8;
+            --blush: #F8E0E0;
+            --sky-blue: #D4E8F5;
+            --butter: #FFF4D4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 50%, var(--cream) 100%);
+            background-attachment: fixed;
+            color: var(--charcoal);
+            line-height: 1.8;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* Zarif imleç */
+        ::selection {
+            background: var(--dusty-rose);
+            color: white;
+        }
+
+        /* Organik şekiller arka plan */
+        .organic-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            top: -150px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--sage), var(--mint));
+            bottom: 5%;
+            left: -150px;
+            animation-delay: 3s;
+        }
+
+        .blob-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--peach), var(--coral-soft));
+            top: 35%;
+            right: 5%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            25% { transform: translate(30px, -30px) scale(1.1) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) scale(0.95) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) scale(1.05) rotate(3deg); }
+        }
+
+        /* Dekoratif çiçekler */
+        .flower-decor {
+            position: fixed;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: rotate-flower 20s infinite linear;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .flower-1 { top: 15%; left: 5%; animation-delay: 0s; }
+        .flower-2 { top: 45%; right: 8%; animation-delay: -5s; font-size: 1.5rem; }
+        .flower-3 { bottom: 25%; left: 12%; animation-delay: -10s; font-size: 1.8rem; }
+
+        @keyframes rotate-flower {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navigasyon */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 252, 248, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--soft-pink);
+            padding: 1.2rem 5%;
+            background: rgba(255, 252, 248, 0.95);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: var(--charcoal);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep), var(--peach-deep));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--warm-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep));
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--rose-deep);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--rose-deep);
+        }
+
+        .nav-links a.active::before {
+            width: 100%;
+        }
+
+        /* Page Hero — Küçük */
+        .page-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10rem 10% 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-greeting {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .page-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .page-title span {
+            display: block;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--peach-deep), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--warm-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 2;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Bölümler */
+        section {
+            padding: 6rem 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Hikaye Bölümü */
+        .story-section {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .story-image-wrap {
+            position: relative;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .story-image-wrap.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .story-image {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 200px 200px 0 0;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.1),
+                0 0 0 8px var(--soft-pink),
+                0 0 0 16px var(--lavender),
+                0 0 0 24px var(--sage-light);
+            margin: 0 auto;
+            transition: all 0.4s ease;
+        }
+
+        .story-image:hover {
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.15),
+                0 0 0 8px var(--dusty-rose),
+                0 0 0 16px var(--lavender-deep),
+                0 0 0 24px var(--sage);
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(0.95);
+            transition: all 0.6s ease;
+        }
+
+        .story-image-wrap:hover .story-image img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.05);
+        }
+
+        .story-badge {
+            position: absolute;
+            bottom: -15px;
+            right: 20%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.3);
+            animation: float-tag 4s infinite ease-in-out;
+        }
+
+        @keyframes float-tag {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .story-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: var(--charcoal);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .story-content h2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-content h2 span {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5rem;
+            color: var(--warm-gray);
+            font-size: 1.05rem;
+            line-height: 2;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .story-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 2rem 0;
+            padding-left: 2rem;
+            border-left: 3px solid;
+            border-image: linear-gradient(180deg, var(--dusty-rose), var(--lavender-deep)) 1;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease 0.3s;
+        }
+
+        .story-quote.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Değerler Bölümü */
+        .values-section {
+            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--lavender) 50%, var(--peach) 100%);
+            margin: 0 -10%;
+            padding: 6rem 10%;
+            width: calc(100% + 20%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .values-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 10s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--warm-gray);
+            font-size: 1.1rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .value-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .value-card:nth-child(1) { transition-delay: 0.1s; }
+        .value-card:nth-child(2) { transition-delay: 0.2s; }
+        .value-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .value-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--charcoal);
+        }
+
+        .value-desc {
+            color: var(--warm-gray);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Deneyim Bölümü */
+        .experience-section {
+            background: white;
+            border-radius: 30px;
+            padding: 4rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .experience-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .experience-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--charcoal);
+        }
+
+        .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .experience-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 3rem;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .experience-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .experience-item:nth-child(1) { transition-delay: 0.1s; }
+        .experience-item:nth-child(2) { transition-delay: 0.2s; }
+        .experience-item:nth-child(3) { transition-delay: 0.3s; }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-item:hover {
+            background: linear-gradient(90deg, transparent, rgba(255, 228, 236, 0.3), transparent);
+            margin: 0 -2rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            border-radius: 15px;
+        }
+
+        .exp-year {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--dusty-rose);
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .exp-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+            font-weight: 500;
+        }
+
+        .exp-company {
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .exp-desc {
+            color: var(--warm-gray);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Kişisel Bölüm */
+        .personal-section {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .personal-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: var(--charcoal);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .personal-content h2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .personal-content h2 span {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .personal-content p {
+            margin-bottom: 1.5rem;
+            color: var(--warm-gray);
+            font-size: 1.05rem;
+            line-height: 2;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .personal-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .interests-list {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .interest-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .interest-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .interest-item:nth-child(1) { transition-delay: 0.1s; }
+        .interest-item:nth-child(2) { transition-delay: 0.2s; }
+        .interest-item:nth-child(3) { transition-delay: 0.3s; }
+        .interest-item:nth-child(4) { transition-delay: 0.4s; }
+
+        .interest-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.2);
+        }
+
+        .interest-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .interest-text {
+            color: var(--charcoal);
+            font-size: 0.9rem;
+        }
+
+        .personal-visual {
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+        }
+
+        .personal-visual.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .visual-circle {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender), var(--peach));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            animation: pulse-glow 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 60px rgba(232, 165, 184, 0.3); }
+            50% { box-shadow: 0 0 100px rgba(232, 165, 184, 0.5); }
+        }
+
+        .visual-inner {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-style: italic;
+            color: var(--dusty-rose);
+        }
+
+        /* CTA Bölümü */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 10%;
+            background: linear-gradient(135deg, var(--charcoal) 0%, #3d3d3d 100%);
+            margin: 0 -10%;
+            width: calc(100% + 20%);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .cta-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(232, 165, 184, 0.1) 0%, transparent 70%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.2s;
+        }
+
+        .cta-section.visible h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-section h2 span {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.3s;
+        }
+
+        .cta-section.visible p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .cta-section.visible .cta-button {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.4s;
+        }
+
+        .cta-button::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(232, 165, 184, 0.5);
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(255, 228, 236, 0.5));
+            color: var(--warm-gray);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-hearts {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .story-section,
+            .personal-section {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .interests-list {
+                grid-template-columns: 1fr;
+            }
+
+            .visual-circle {
+                width: 250px;
+                height: 250px;
+            }
+
+            .visual-inner {
+                width: 200px;
+                height: 200px;
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Organik Arka Plan -->
+    <div class="organic-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Dekoratif Çiçekler -->
+    <div class="flower-decor flower-1">✿</div>
+    <div class="flower-decor flower-2">❀</div>
+    <div class="flower-decor flower-3">✾</div>
+
+    <!-- Navigasyon -->
+    <nav id="navbar">
+        <a href="index-renkli (1).html" class="logo">✦ V. Portfolyo</a>
+        <ul class="nav-links">
+            <li><a href="index-renkli (1).html">Ana Sayfa</a></li>
+            <li><a href="hakkımda.html" class="active">Hakkımda</a></li>
+            <li><a href="projeler.html">Projeler</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div>
+            <span class="page-greeting">Merhaba, ben</span>
+            <h1 class="page-title">
+                M.Vildan
+                <span>BABAER</span>
+            </h1>
+            <p class="page-subtitle">
+                Hakkımda
+               Tasarım ve yazılım disiplinlerini bir arada yürüten, kullanıcı deneyimi odaklı bir geliştiriciyim. Görsel estetiği teknik altyapıyla birleştirerek, hem işlevsel hem de modern dijital çözümler üretmeye odaklanıyorum.
+            </p>
+        </div>
+    </section>
+
+    <!-- Hikaye -->
+    <section class="story-section">
+        <div class="story-image-wrap">
+            <div class="story-image">
+                <img src="vildan.jfif" alt="Vildan Babaer">
+            </div>
+            <span class="story-badge">✦ Yaratıcı Ruh</span>
+        </div>
+        <div class="story-content">
+            <h2>Kod ve <span>estetik</span> arasında</h2>
+            <p>
+                Yetenek Seti ve Uzmanlıklar:
+
+               Tasarım & UI/UX: Adobe Photoshop ve Animate kullanarak dijital varlıklar oluşturuyor; tipografi, renk teorisi ve UI/UX prensipleri doğrultusunda kullanıcı dostu arayüzler tasarlıyorum.
+
+              Frontend & Web Animasyon: Tasarımları HTML5, CSS3 ve JavaScript kullanarak web ortamına aktarıyor, dinamik ve yaşayan arayüzler geliştiriyorum.
+
+              Backend & Veritabanı: Java, C# ve PHP dillerinde projeler geliştirirken, MySQL ve SQL sistemleri ile veritabanı yönetimi ve optimizasyonu sağlıyorum.
+            </p>
+            <p>
+                Karmaşık teknik süreçleri estetik bir bakış açısıyla harmanlamayı, projelerin hem görsel hem de yapısal mimarisinde sorumluluk almayı önemsiyorum.
+            </p>
+            <blockquote class="story-quote">
+                "Tasarım ve yazılımı iki ayrı dil değil, tek bir bütün olarak görüyorum."
+            </blockquote>
+            <p>
+                Ankara'da yaşıyorum. Boş zamanlarımda analog fotoğrafçılık yapıyor, 
+                kitap okuyor ve psikoloji ile ilgileniyorum. Bu hobiler, 
+                dijital dünyadan uzaklaşıp somut şeyler üretme ihtiyacımdan doğdu.
+            </p>
+        </div>
+    </section>
+
+    <!-- Değerler -->
+    <section class="values-section">
+        <div class="section-header">
+            <h2>Değerlerim</h2>
+            <p>Her projede beni yönlendiren ilkeler</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <span class="value-icon">✦</span>
+                <h3 class="value-title">Yaratıcılık</h3>
+                <p class="value-desc">
+                    Sınırları zorlamak ve alışılmışın dışında çözümler üretmek. 
+                    Her projede yeni bir şeyler denemekten korkmam.
+                </p>
+            </div>
+            <div class="value-card">
+                <span class="value-icon">✧</span>
+                <h3 class="value-title">Empati</h3>
+                <p class="value-desc">
+                    Kullanıcının yerine kendimi koymak. Teknik mükemmellik, 
+                    insanları anlamadan anlamsızdır.
+                </p>
+            </div>
+            <div class="value-card">
+                <span class="value-icon">✦</span>
+                <h3 class="value-title">Mükemmellik</h3>
+                <p class="value-desc">
+                    Detaylarda gizli olanı bulmak. Bir pikselin bile 
+                    tesadüfi olmadığına inanırım.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deneyim -->
+    <section class="experience-section">
+        <h2>Deneyim</h2>
+        <div class="experience-list">
+            <div class="experience-item">
+                <div class="exp-year">2024 — Günümüz</div>
+                <div class="exp-content">
+                    <h3>Full Stack Developer & UI Designer</h3>
+                    <span class="exp-company">Freelance / İstanbul</span>
+                    <p class="exp-desc">
+                        Web ve mobil projelerde hem frontend hem backend geliştirme yapıyor, 
+                        aynı zamanda kullanıcı arayüzü tasarımlarını üstleniyorum. 
+                        Java, C#, PHP ve modern JavaScript framework'leri ile çalışıyorum.
+                    </p>
+                </div>
+            </div>
+            <div class="experience-item">
+                <div class="exp-year">2024 — 2026</div>
+                <div class="exp-content">
+                    <h3>Junior Developer</h3>
+                    <span class="exp-company">Freelance / Ankara</span>
+                    <p class="exp-desc">
+                        Kurumsal web uygulamaları geliştirdim. SQL ve MySQL veritabanı yönetimi, 
+                        RESTful API tasarımı ve responsive web arayüzleri konularında deneyim kazandım.
+                    </p>
+                </div>
+            </div>
+            <div class="experience-item">
+                <div class="exp-year">2024 — 2026</div>
+                <div class="exp-content">
+                    <h3>Grafik Tasarımcı</h3>
+                    <span class="exp-company">Freelance / Ankara</span>
+                    <p class="exp-desc">
+                        Sosyal medya görselleri, marka kimlikleri ve web arayüz tasarımları 
+                        hazırladım. Adobe Creative Suite ve UI/UX prensipleri üzerine yoğunlaştım.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kişisel -->
+    <section class="personal-section">
+        <div class="personal-content">
+            <h2>İş dışında <span>ben</span></h2>
+            <p>
+                Sabah erken kalkıp kahve demlemeyi severim. Kahvem elimdeyken 
+                gün doğumunu izlemek güne iyi başlamamı sağlar.
+            </p>
+            <p>
+                Hafta sonları analog fotoğraf makinemle dolaşırım. Dijitalin hızına karşı 
+                yavaşlığın değerini hatırlatır bana. Her kareyi düşünerek çekmek, 
+                tasarımdaki detaycılığımı besliyor.
+            </p>
+            <div class="interests-list">
+                <div class="interest-item">
+                    <div class="interest-icon">📷</div>
+                    <span class="interest-text">Analog Fotoğraf</span>
+                </div>
+                <div class="interest-item">
+                    <div class="interest-icon">🌱</div>
+                    <span class="interest-text">Bitki Bakımı</span>
+                </div>
+                <div class="interest-item">
+                    <div class="interest-icon">☕</div>
+                    <span class="interest-text">Kahve Demleme</span>
+                </div>
+                <div class="interest-item">
+                    <div class="interest-icon">🏺</div>
+                    <span class="interest-text">Seramik</span>
+                </div>
+            </div>
+        </div>
+        <div class="personal-visual">
+            <div class="visual-circle">
+                <div class="visual-inner">
+                    VB
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Birlikte <span>çalışalım</span> mı?</h2>
+            <p>
+                Fikirlerinizi dinlemeyi, sorunlarınıza çözüm bulmayı ve 
+                birlikte güzel işler yapmayı çok isterim.
+            </p>
+            <a href="index.html#contact" class="cta-button">İletişime Geç</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-quote">"Yaratmak, ruhun nefes almasıdır"</p>
+        <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
+        <p class="footer-hearts">✦ ✧ ✦</p>
+    </footer>
+
+    <script>
+        // Scroll animasyonları için Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Gözlemlenecek elementler
+        const elementsToAnimate = [
+            '.story-image-wrap',
+            '.story-content h2',
+            '.story-content p',
+            '.story-quote',
+            '.section-header',
+            '.value-card',
+            '.experience-section',
+            '.experience-item',
+            '.personal-content h2',
+            '.personal-content p',
+            '.interest-item',
+            '.personal-visual',
+            '.cta-section',
+            'footer'
+        ];
+
+        elementsToAnimate.forEach(selector => {
+            document.querySelectorAll(selector).forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Navbar scroll efekti
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Organik blob hareketi mouse ile
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 15;
+                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Parallax efekti çiçekler için
+        document.addEventListener('mousemove', (e) => {
+            const flowers = document.querySelectorAll('.flower-decor');
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            flowers.forEach((flower, index) => {
+                const speed = (index + 1) * 0.5;
+                flower.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Smooth scroll için tüm linkler
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
