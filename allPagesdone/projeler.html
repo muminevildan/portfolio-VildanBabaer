@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeler — Vildan Babaer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFFCF8;
+            --soft-pink: #FFE4EC;
+            --dusty-rose: #f596b1;
+            --rose-deep: #D4849C;
+            --sage: #B8D4C0;
+            --sage-light: #D4E8D8;
+            --charcoal: #2C2C2C;
+            --warm-gray: #6B6B6B;
+            --light-gray: #E8E8E8;
+            --lavender: #e2c6ed;
+            --lavender-deep: #c09dd0;
+            --peach: #FFD4C4;
+            --peach-deep: #F5B8A0;
+            --coral: #FFB5A7;
+            --coral-soft: #FFD4CC;
+            --mint: #C4F0E0;
+            --mint-soft: #E0F5EE;
+            --champagne: #F5E6D3;
+            --gold: #E8D4A8;
+            --blush: #F8E0E0;
+            --sky-blue: #D4E8F5;
+            --butter: #FFF4D4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 50%, var(--cream) 100%);
+            background-attachment: fixed;
+            color: var(--charcoal);
+            line-height: 1.8;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* Görsel Yönetimi - Tüm görsellerin taşmasını önle */
+        img, video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        ::selection {
+            background: var(--dusty-rose);
+            color: white;
+        }
+
+        /* Organik Arka Plan */
+        .organic-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            top: -150px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--sage), var(--mint));
+            bottom: 5%;
+            left: -150px;
+            animation-delay: 3s;
+        }
+
+        .blob-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--peach), var(--coral-soft));
+            top: 35%;
+            right: 5%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            25% { transform: translate(30px, -30px) scale(1.1) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) scale(0.95) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) scale(1.05) rotate(3deg); }
+        }
+
+        /* Dekoratif Çiçekler */
+        .flower-decor {
+            position: fixed;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: rotate-flower 20s infinite linear;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .flower-1 { top: 15%; left: 5%; animation-delay: 0s; }
+        .flower-2 { top: 45%; right: 8%; animation-delay: -5s; font-size: 1.5rem; }
+        .flower-3 { bottom: 25%; left: 12%; animation-delay: -10s; font-size: 1.8rem; }
+
+        @keyframes rotate-flower {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navigasyon */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 252, 248, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--soft-pink);
+            padding: 1.2rem 5%;
+            background: rgba(255, 252, 248, 0.95);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: var(--charcoal);
+            text-decoration: none;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep), var(--peach-deep));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Hamburger Menü Checkbox - Gizli */
+        #menu-toggle {
+            display: none;
+        }
+
+        /* Hamburger Menü Label/Icon */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--charcoal);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links a {
+            color: var(--warm-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep));
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--rose-deep);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--rose-deep);
+        }
+
+        .nav-links a.active::before {
+            width: 100%;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10rem 10% 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-greeting {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .page-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .page-title span {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--peach-deep), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--warm-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 2;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Filter Buttons */
+        .filter-section {
+            padding: 2rem 10%;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .filter-buttons.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--warm-gray);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.3);
+        }
+
+        .filter-btn:hover::before,
+        .filter-btn.active::before {
+            left: 0;
+        }
+
+        /* Projects Grid - Düzenli Grid Sistem */
+        .projects-section {
+            padding: 4rem 10%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        /* Project Card */
+        .project-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--charcoal), #3d3d3d);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover .video-container video {
+            transform: scale(1.05);
+        }
+
+        /* Video Overlay */
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(44,44,44,0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover .video-overlay {
+            opacity: 1;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.5);
+        }
+
+        .play-button::before {
+            content: '▶';
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 5px;
+        }
+
+        .project-card:hover .play-button {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            backdrop-filter: blur(10px);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover .video-badge {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Web Project Preview (for non-video projects) */
+        .web-preview {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+        }
+
+        .web-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .project-card:hover .web-preview img {
+            transform: scale(1.05);
+        }
+
+        .browser-mockup {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(180deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1rem;
+            z-index: 2;
+        }
+
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .browser-dot:nth-child(1) { background: #ff5f56; }
+        .browser-dot:nth-child(2) { background: #ffbd2e; }
+        .browser-dot:nth-child(3) { background: #27c93f; }
+
+        /* Project Info */
+        .project-info {
+            padding: 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .project-card:hover .project-category {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            color: white;
+        }
+
+        .project-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            line-height: 1.3;
+        }
+
+        .project-card:hover .project-title {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-desc {
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+            flex: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .tech-tag {
+            padding: 0.3rem 0.8rem;
+            background: var(--cream);
+            border: 1px solid var(--light-gray);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--warm-gray);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .tech-tag {
+            border-color: var(--dusty-rose);
+            color: var(--dusty-rose);
+            transform: translateY(-2px);
+        }
+
+        /* Video Modal */
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(44, 44, 44, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            padding: 2rem;
+        }
+
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .video-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .modal-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -60px;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            color: white;
+        }
+
+        .modal-info {
+            margin-top: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .modal-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-info p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--lavender) 50%, var(--peach) 100%);
+            margin: 4rem -10%;
+            padding: 4rem 10%;
+            width: calc(100% + 20%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 10s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item:nth-child(1) { transition-delay: 0.1s; }
+        .stat-item:nth-child(2) { transition-delay: 0.2s; }
+        .stat-item:nth-child(3) { transition-delay: 0.3s; }
+        .stat-item:nth-child(4) { transition-delay: 0.4s; }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--warm-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 6rem 10%;
+            background: linear-gradient(135deg, var(--charcoal) 0%, #3d3d3d 100%);
+            margin: 0 -10%;
+            width: calc(100% + 20%);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .cta-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(232, 165, 184, 0.1) 0%, transparent 70%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.2s;
+        }
+
+        .cta-section.visible h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-section h2 span {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.3s;
+        }
+
+        .cta-section.visible p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .cta-section.visible .cta-button {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.4s;
+        }
+
+        .cta-button::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(232, 165, 184, 0.5);
+        }
+
+        .cta-button:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(255, 228, 236, 0.5));
+            color: var(--warm-gray);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-hearts {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ==========================================
+           RESPONSIVE TASARIM - MEDIA QUERIES
+           ========================================== */
+
+        /* Tablet için (1024px ve altı) */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* Tablet ve küçük ekranlar için (968px ve altı) */
+        @media (max-width: 968px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .page-title {
+                font-size: 3rem;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .play-button {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        /* Mobil görünüm için (768px ve altı) - Hamburger Menü */
+        @media (max-width: 768px) {
+            /* Hamburger menüyü göster */
+            .hamburger {
+                display: flex;
+            }
+
+            /* Normal nav-links'i gizle ve mobil stil ver */
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(255, 252, 248, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                padding: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                z-index: 999;
+            }
+
+            /* Checkbox checked olduğunda menüyü aç */
+            #menu-toggle:checked ~ .nav-links {
+                right: 0;
+            }
+
+            /* Hamburger animasyonu - X'e dönüşüm */
+            #menu-toggle:checked ~ .hamburger span:nth-child(1) {
+                transform: translateY(10.5px) rotate(45deg);
+            }
+
+            #menu-toggle:checked ~ .hamburger span:nth-child(2) {
+                opacity: 0;
+            }
+
+            #menu-toggle:checked ~ .hamburger span:nth-child(3) {
+                transform: translateY(-10.5px) rotate(-45deg);
+            }
+
+            /* Menü açıkken arka plan overlay */
+            #menu-toggle:checked ~ .menu-overlay {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.3);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s ease;
+                z-index: 998;
+            }
+
+            /* Nav linklerin mobil stili */
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+
+            /* Hero düzenlemeleri */
+            .page-hero {
+                padding: 8rem 5% 3rem;
+                min-height: auto;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .page-greeting {
+                font-size: 1.1rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            /* Filter buttons mobil */
+            .filter-section {
+                padding: 1.5rem 5%;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            /* Projects grid mobil */
+            .projects-section {
+                padding: 2rem 5%;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-card {
+                border-radius: 20px;
+            }
+
+            .project-info {
+                padding: 1.5rem;
+            }
+
+            .project-title {
+                font-size: 1.4rem;
+            }
+
+            .project-desc {
+                font-size: 0.85rem;
+            }
+
+            /* Stats mobil */
+            .stats-section {
+                margin: 3rem -5%;
+                padding: 3rem 5%;
+                width: calc(100% + 10%);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-item {
+                padding: 1.5rem 1rem;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+
+            /* CTA mobil */
+            .cta-section {
+                padding: 4rem 5%;
+                margin: 0 -5%;
+                width: calc(100% + 10%);
+            }
+
+            .cta-section h2 {
+                font-size: 2.2rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 0.85rem;
+            }
+
+            /* Modal mobil */
+            .video-modal {
+                padding: 1rem;
+            }
+
+            .modal-close {
+                top: -50px;
+                right: 10px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .modal-info h3 {
+                font-size: 1.4rem;
+            }
+
+            /* Footer düzenlemesi */
+            footer {
+                padding: 3rem 1rem;
+            }
+
+            .footer-quote {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Küçük mobil ekranlar için (480px ve altı) */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.75rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-info {
+                padding: 1.2rem;
+            }
+
+            .project-title {
+                font-size: 1.3rem;
+            }
+
+            .tech-tag {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.6rem;
+            }
+
+            .play-button {
+                width: 50px;
+                height: 50px;
+            }
+
+            .play-button::before {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Yatay mobil görünüm için */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .page-hero {
+                min-height: auto;
+                padding-top: 80px;
+                padding-bottom: 40px;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                padding-top: 60px;
+                justify-content: flex-start;
+            }
+
+            .video-modal {
+                align-items: flex-start;
+                padding-top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Organik Arka Plan -->
+    <div class="organic-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Dekoratif Çiçekler -->
+    <div class="flower-decor flower-1">✿</div>
+    <div class="flower-decor flower-2">❀</div>
+    <div class="flower-decor flower-3">✾</div>
+
+    <!-- Navigasyon - Hamburger Menü ile -->
+    <nav id="navbar">
+        <a href="index-renkli (1).html" class="logo">✦ V. Portfolyo</a>
+        
+        <!-- Gizli Checkbox -->
+        <input type="checkbox" id="menu-toggle">
+        
+        <!-- Hamburger Icon (Label) -->
+        <label for="menu-toggle" class="hamburger" aria-label="Menüyü Aç/Kapat">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        
+        <!-- Menü Overlay (arka plan tıklama alanı) -->
+        <label for="menu-toggle" class="menu-overlay"></label>
+        
+        <!-- Navigasyon Linkleri -->
+        <ul class="nav-links">
+            <li><a href="index-renkli (1).html">Ana Sayfa</a></li>
+            <li><a href="hakkımda.html">Hakkımda</a></li>
+            <li><a href="projeler.html" class="active">Projeler</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div>
+            <span class="page-greeting">Keşfet</span>
+            <h1 class="page-title">
+                Seçilmiş <span>Projeler</span>
+            </h1>
+            <p class="page-subtitle">
+                Her proje benim için bir hikaye. Videolarla ve interaktif deneyimlerle 
+                çalışmalarımı keşfedin.
+            </p>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn" data-filter="video">Video</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="mobile">Mobil</button>
+        </div>
+    </section>
+
+    <!-- Projects Grid - 7 Video Projesi -->
+    <section class="projects-section">
+        <div class="projects-grid">
+            
+            <!-- Video Project 1 -->
+            <div class="project-card" data-category="video" onclick="openModal('project1')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="_HTML5 ve formlar 10.pdf.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <span class="video-badge">Video Proje</span>
+                    </div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Motion Design</span>
+                    <h3 class="project-title">HTML5 ve Formlar</h3>
+                    <p class="project-desc">
+                        HTML5 ve formlar konusunu anlatan eğitim videosu. Görsel efektler ve 
+                        animasyonlarla zenginleştirilmiş içerik.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">After Effects</span>
+                        <span class="tech-tag">Figma</span>
+                        <span class="tech-tag">Lottie</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Project 2 -->
+            <div class="project-card" data-category="video" onclick="openModal('project2')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="Aşk Ve Gurur Sunum.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <span class="video-badge">Video Proje</span>
+                    </div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Sunum</span>
+                    <h3 class="project-title">Aşk Ve Gurur Sunum</h3>
+                    <p class="project-desc">
+                        Aşk ve Gurur kitabının sunumu için hazırlanan video. Görsel efektler ve 
+                        animasyonlarla zenginleştirilmiş içerik.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">After Effects</span>
+                        <span class="tech-tag">Figma</span>
+                        <span class="tech-tag">Lottie</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Project 3 -->
+            <div class="project-card" data-category="video" onclick="openModal('project3')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="Css nedir-13.pdf.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <span class="video-badge">Video Proje</span>
+                    </div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Eğitim</span>
+                    <h3 class="project-title">CSS Nedir?</h3>
+                    <p class="project-desc">
+                        CSS nedir? konusunu anlatan eğitim videosu. Görsel efektler ve 
+                        animasyonlarla zenginleştirilmiş içerik.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">After Effects</span>
+                        <span class="tech-tag">Figma</span>
+                        <span class="tech-tag">Lottie</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Project 4 -->
+            <div class="project-card" data-category="video" onclick="openModal('project4')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="_ Grafik Örnekleri-CarryMind Projesi.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <span class="video-badge">Video Proje</span>
+                    </div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">UI Animation</span>
+                    <h3 class="project-title">Akıllı Zihin Haritası</h3>
+                    <p class="project-desc">
+                        Unutulan nesne problemi için yaratılmış akıllı zihin haritası uygulaması. Arayüz animasyonları ve kullanıcı deneyimi tasarımı.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Principle</span>
+                        <span class="tech-tag">After Effects</span>
+                        <span class="tech-tag">Figma</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Project 5 -->
+            <div class="project-card" data-category="video" onclick="openModal('project5')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="video5.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <span class="video-badge">Video Proje</span>
+                    </div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Brand Film</span>
+                    <h3 class="project-title">Web Tasarımının Temelleri</h3>
+                    <p class="project-desc">
+                        Web tasarımının temel kavramlarını anlatan eğitim videosu. Senaryo, çekim ve post-prodüksiyon süreçleri.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Premiere Pro</span>
+                        <span class="tech-tag">DaVinci</span>
+                        <span class="tech-tag">Audition</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Project 6 -->
+            <div class="project-card" data-category="video" onclick="openModal('project6')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="video6.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <span class="video-badge">Video Proje</span>
+                    </div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Motion Graphics</span>
+                    <h3 class="project-title">JavaScript Temelleri</h3>
+                    <p class="project-desc">
+                        JavaScript programlama dilinin temellerini anlatan animasyonlu eğitim serisi. İnteraktif örneklerle desteklenmiştir.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">After Effects</span>
+                        <span class="tech-tag">Illustrator</span>
+                        <span class="tech-tag">Animate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Project 7 -->
+            <div class="project-card" data-category="video" onclick="openModal('project7')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="video7.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <span class="video-badge">Video Proje</span>
+                    </div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">UI/UX Showcase</span>
+                    <h3 class="project-title">Responsive Tasarım İlkeleri</h3>
+                    <p class="project-desc">
+                        Mobil ve masaüstü uyumlu web tasarımının inceliklerini gösteren kapsamlı bir video serisi. Grid sistemleri ve flexbox yapıları.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Figma</span>
+                        <span class="tech-tag">After Effects</span>
+                        <span class="tech-tag">Cinema 4D</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Project 1 -->
+            <div class="project-card" data-category="web" onclick="window.open('https://example.com', '_blank')">
+                <div class="web-preview" style="background: linear-gradient(135deg, var(--mint), var(--sage));">
+                    <div class="browser-mockup">
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <img src="web1.jpg" alt="Web Project">
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Web Tasarım</span>
+                    <h3 class="project-title">E-Ticaret Platformu</h3>
+                    <p class="project-desc">
+                        Modern ve kullanıcı dostu e-ticaret platformu. React ve Node.js ile geliştirilmiş, ödeme entegrasyonları içerir.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Project -->
+            <div class="project-card" data-category="mobile" onclick="window.open('https://example.com', '_blank')">
+                <div class="web-preview" style="background: linear-gradient(135deg, var(--peach), var(--coral));">
+                    <div class="browser-mockup">
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                        <div class="browser-dot"></div>
+                    </div>
+                    <img src="mobile1.jpg" alt="Mobile Project">
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Mobil Uygulama</span>
+                    <h3 class="project-title">Which-Görev Analisti</h3>
+                    <p class="project-desc">
+                        Günlük görevleriniz için akıllı öneriler sunan mobil uygulama. React Native ve Firebase ile geliştirilmiş.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React Native</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">Redux</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number" data-target="9">0</span>
+                <span class="stat-label">Proje</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="7">0</span>
+                <span class="stat-label">Video</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="2">0</span>
+                <span class="stat-label">Web</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="50">0</span>
+                <span class="stat-label">Mutlu Müşteri</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Birlikte <span>çalışalım</span> mı?</h2>
+            <p>
+                Yeni bir proje mi düşünüyorsunuz? Fikirlerinizi hayata geçirmek için 
+                sabırsızlanıyorum.
+            </p>
+            <a href="iletisim.html" class="cta-button">İletişime Geç</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-quote">"Yaratmak, ruhun nefes almasıdır"</p>
+        <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
+        <p class="footer-hearts">✦ ✧ ✦</p>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal(event)">✕</div>
+            <div class="modal-video">
+                <video id="modalVideo" controls>
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            <div class="modal-info">
+                <h3 id="modalTitle">Proje Başlığı</h3>
+                <p id="modalDesc">Proje açıklaması buraya gelecek.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Video Modal Functions - 7 Video Projesi
+        const projectData = {
+            'project1': {
+                title: 'HTML5 ve Formlar',
+                desc: 'HTML5 ve formlar konusunu anlatan eğitim videosu. Görsel efektler ve animasyonlarla zenginleştirilmiş içerik.',
+                video: '_HTML5 ve formlar 10.pdf.mp4'
+            },
+            'project2': {
+                title: 'Aşk Ve Gurur Sunum',
+                desc: 'Aşk ve Gurur kitabının sunumu için hazırlanan video. Görsel efektler ve animasyonlarla zenginleştirilmiş içerik.',
+                video: 'Aşk Ve Gurur Sunum.mp4'
+            },
+            'project3': {
+                title: 'CSS Nedir?',
+                desc: 'CSS nedir? konusunu anlatan eğitim videosu. Görsel efektler ve animasyonlarla zenginleştirilmiş içerik.',
+                video: 'Css nedir-13.pdf.mp4'
+            },
+            'project4': {
+                title: 'Akıllı Zihin Haritası',
+                desc: 'Unutulan nesne problemi için yaratılmış akıllı zihin haritası uygulaması. Arayüz animasyonları ve kullanıcı deneyimi tasarımı.',
+                video: '_ Grafik Örnekleri-CarryMind Projesi.mp4'
+            },
+            'project5': {
+                title: 'Web Tasarımının Temelleri',
+                desc: 'Web tasarımının temel kavramlarını anlatan eğitim videosu. Senaryo, çekim ve post-prodüksiyon süreçleri.',
+                video: 'video5.mp4'
+            },
+            'project6': {
+                title: 'JavaScript Temelleri',
+                desc: 'JavaScript programlama dilinin temellerini anlatan animasyonlu eğitim serisi. İnteraktif örneklerle desteklenmiştir.',
+                video: 'video6.mp4'
+            },
+            'project7': {
+                title: 'Responsive Tasarım İlkeleri',
+                desc: 'Mobil ve masaüstü uyumlu web tasarımının inceliklerini gösteren kapsamlı bir video serisi. Grid sistemleri ve flexbox yapıları.',
+                video: 'video7.mp4'
+            }
+        };
+
+        function openModal(projectId) {
+            event.stopPropagation();
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            const title = document.getElementById('modalTitle');
+            const desc = document.getElementById('modalDesc');
+            
+            const data = projectData[projectId];
+            if (data) {
+                title.textContent = data.title;
+                desc.textContent = data.desc;
+                video.querySelector('source').src = data.video;
+                video.load();
+                modal.classList.add('active');
+                video.play();
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(event) {
+            event.stopPropagation();
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            
+            if (event.target === modal || event.target.closest('.modal-close')) {
+                modal.classList.remove('active');
+                video.pause();
+                video.currentTime = 0;
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = 'flex';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0) scale(1)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px) scale(0.95)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 400);
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate stat numbers
+                    if (entry.target.classList.contains('stat-item')) {
+                        const numberEl = entry.target.querySelector('.stat-number');
+                        const target = parseInt(numberEl.getAttribute('data-target'));
+                        animateNumber(numberEl, target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        const elementsToAnimate = [
+            '.filter-buttons',
+            '.project-card',
+            '.stat-item',
+            '.cta-section',
+            'footer'
+        ];
+
+        elementsToAnimate.forEach(selector => {
+            document.querySelectorAll(selector).forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Number Animation
+        function animateNumber(element, target) {
+            let current = 0;
+            const increment = target / 30;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 50);
+        }
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobil menü açıkken sayfa scroll'unu engelle
+        const menuToggle = document.getElementById('menu-toggle');
+        menuToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Menü linklerine tıklandığında menüyü kapat
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.checked = false;
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Mouse Blob Animation
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 15;
+                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Flower Parallax
+        document.addEventListener('mousemove', (e) => {
+            const flowers = document.querySelectorAll('.flower-decor');
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            flowers.forEach((flower, index) => {
+                const speed = (index + 1) * 0.5;
+                flower.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('videoModal');
+                const video = document.getElementById('modalVideo');
+                modal.classList.remove('active');
+                video.pause();
+                video.currentTime = 0;
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Pause videos when not in viewport
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.video-container video').forEach(video => {
+            videoObserver.observe(video);
+        });
+    </script>
+</body>
+</html>
