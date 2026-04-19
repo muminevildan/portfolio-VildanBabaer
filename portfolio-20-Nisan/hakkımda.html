@@ -34,6 +34,24 @@
             --butter: #FFF4D4;
         }
 
+        /* Dark Mode Variables - DÜZELTİLMİŞ OKUNABİLİRLİK */
+        [data-theme="dark"] {
+            --cream: #1a1a2e;
+            --soft-pink: #2d2d44;
+            --dusty-rose: #e8a4b8;
+            --rose-deep: #f0b8c8;
+            --sage: #4a5d5f;
+            --sage-light: #3d4f52;
+            --charcoal: #f5f0eb;
+            --warm-gray: #c8c0b8;
+            --light-gray: #4a4a6a;
+            --lavender: #d4b8e8;
+            --lavender-deep: #c8a8e0;
+            --peach: #f0c8b8;
+            --peach-deep: #e8b8a0;
+            --blush: #2a2a3e;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -52,6 +70,160 @@
             line-height: 1.8;
             font-weight: 300;
             overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-flower {
+            font-size: 3rem;
+            animation: spin-flower 2s infinite linear;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--warm-gray);
+            letter-spacing: 2px;
+        }
+
+        @keyframes spin-flower {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            color: var(--charcoal);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(232, 165, 184, 0.4);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(232, 165, 184, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.6);
+        }
+
+        /* Falling Petals */
+        .petal {
+            position: fixed;
+            top: -50px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--warm-gray);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        [data-theme="dark"] .visitor-counter {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
+        .visitor-counter span {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
         }
 
         /* Görsel Yönetimi */
@@ -158,6 +330,15 @@
             border-bottom-color: var(--soft-pink);
             padding: 1.2rem 5%;
             background: rgba(255, 252, 248, 0.95);
+        }
+
+        [data-theme="dark"] nav {
+            background: rgba(26, 26, 46, 0.9);
+            border-bottom-color: var(--light-gray);
+        }
+
+        [data-theme="dark"] nav.scrolled {
+            background: rgba(26, 26, 46, 0.95);
         }
 
         .logo {
@@ -412,6 +593,7 @@
             box-shadow: 0 10px 30px rgba(232, 165, 184, 0.3);
             animation: float-tag 4s infinite ease-in-out;
             white-space: nowrap;
+            color: var(--charcoal);
         }
 
         @keyframes float-tag {
@@ -509,6 +691,10 @@
             animation: shimmer 10s infinite linear;
         }
 
+        [data-theme="dark"] .values-section::before {
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
         @keyframes shimmer {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -565,6 +751,11 @@
             transform: translateY(30px);
         }
 
+        [data-theme="dark"] .value-card {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
         .value-card.visible {
             opacity: 1;
             transform: translateY(0);
@@ -589,6 +780,10 @@
         .value-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .value-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .value-card:hover::before {
@@ -635,6 +830,11 @@
             max-width: 1200px;
         }
 
+        [data-theme="dark"] .experience-section {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
         .experience-section.visible {
             opacity: 1;
             transform: translateY(0);
@@ -667,6 +867,10 @@
             transform: translateX(-20px);
         }
 
+        [data-theme="dark"] .experience-item {
+            border-bottom-color: var(--light-gray);
+        }
+
         .experience-item.visible {
             opacity: 1;
             transform: translateX(0);
@@ -686,6 +890,10 @@
             padding-left: 1.5rem;
             padding-right: 1.5rem;
             border-radius: 15px;
+        }
+
+        [data-theme="dark"] .experience-item:hover {
+            background: linear-gradient(90deg, transparent, rgba(255, 228, 236, 0.1), transparent);
         }
 
         .exp-year {
@@ -790,6 +998,11 @@
             transform: translateY(20px);
         }
 
+        [data-theme="dark"] .interest-item {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
         .interest-item.visible {
             opacity: 1;
             transform: translateY(0);
@@ -803,6 +1016,10 @@
         .interest-item:hover {
             transform: translateX(8px);
             box-shadow: 0 10px 30px rgba(232, 165, 184, 0.2);
+        }
+
+        [data-theme="dark"] .interest-item:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .interest-icon {
@@ -867,6 +1084,36 @@
             color: var(--dusty-rose);
         }
 
+        /* Quote Rotation */
+        .quote-container {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .rotating-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+        }
+
+        .rotating-quote.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -880,20 +1127,13 @@
             transition: all 0.6s ease;
         }
 
+        [data-theme="dark"] footer {
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
+        }
+
         footer.visible {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        .footer-quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-style: italic;
-            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.8rem;
         }
 
         .footer-hearts {
@@ -1022,6 +1262,10 @@
             .experience-section {
                 padding: 2rem;
             }
+
+            .theme-toggle, .visitor-counter {
+                display: none;
+            }
         }
 
         /* Mobil görünüm için (768px ve altı) - Hamburger Menü */
@@ -1047,6 +1291,10 @@
                 transition: right 0.4s ease;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.1);
                 z-index: 999;
+            }
+
+            [data-theme="dark"] .nav-links {
+                background: rgba(26, 26, 46, 0.98);
             }
 
             #menu-toggle:checked ~ .nav-links {
@@ -1147,10 +1395,6 @@
             footer {
                 padding: 2.5rem 1rem;
             }
-
-            .footer-quote {
-                font-size: 1.2rem;
-            }
         }
 
         /* Küçük mobil ekranlar için (480px ve altı) */
@@ -1246,6 +1490,23 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-flower">✦</div>
+        <div class="loading-text">Yükleniyor...</div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">☀</button>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" title="Yukarı Çık">↑</button>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        <span>✦</span> <span id="visitorCount">0</span> ziyaretçi
+    </div>
+
     <!-- Organik Arka Plan -->
     <div class="organic-bg">
         <div class="blob blob-1"></div>
@@ -1430,12 +1691,104 @@
 
     <!-- Footer -->
     <footer>
-        <p class="footer-quote">"Yaratmak, ruhun nefes almasıdır"</p>
+        <div class="quote-container">
+            <p class="rotating-quote active" id="quote1">"Yaratmak, ruhun nefes almasıdır"</p>
+            <p class="rotating-quote" id="quote2">"Tasarım, görünmeyeni görünür kılmaktır"</p>
+            <p class="rotating-quote" id="quote3">"Detaylar, mükemmelliğin mimarıdır"</p>
+            <p class="rotating-quote" id="quote4">"Kod şiir, tasarım duygudur"</p>
+        </div>
         <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
         <p class="footer-hearts">✦ ✧ ✦</p>
     </footer>
 
     <script>
+        // 1. Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 150);
+        });
+
+        // 2. Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☾';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☾' : '☀';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // 3. Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 4. Falling Petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = ['✦', '✧', '⋆', '★'][Math.floor(Math.random() * 4)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.color = ['var(--dusty-rose)', 'var(--lavender-deep)', 'var(--peach-deep)', 'var(--sage)'][Math.floor(Math.random() * 4)];
+            
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        setInterval(createPetal, 3000);
+
+        // 5. Rotating Quotes
+        const quotes = document.querySelectorAll('.rotating-quote');
+        let currentQuote = 0;
+
+        function rotateQuotes() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+
+        setInterval(rotateQuotes, 5000);
+
+        // 6. Visitor Counter (using localStorage)
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount');
+            if (!count) {
+                count = Math.floor(Math.random() * 1000) + 500;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitorCount').textContent = count;
+        }
+
+        updateVisitorCount();
+
         // Scroll animasyonları için Intersection Observer
         const observerOptions = {
             threshold: 0.1,

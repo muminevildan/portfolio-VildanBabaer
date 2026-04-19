@@ -34,6 +34,24 @@
             --butter: #FFF4D4;
         }
 
+        /* Dark Mode Variables - DÜZELTİLMİŞ OKUNABİLİRLİK */
+        [data-theme="dark"] {
+            --cream: #1a1a2e;
+            --soft-pink: #2d2d44;
+            --dusty-rose: #e8a4b8;
+            --rose-deep: #f0b8c8;
+            --sage: #4a5d5f;
+            --sage-light: #3d4f52;
+            --charcoal: #f5f0eb;
+            --warm-gray: #c8c0b8;
+            --light-gray: #4a4a6a;
+            --lavender: #d4b8e8;
+            --lavender-deep: #c8a8e0;
+            --peach: #f0c8b8;
+            --peach-deep: #e8b8a0;
+            --blush: #2a2a3e;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -52,6 +70,278 @@
             line-height: 1.8;
             font-weight: 300;
             overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-flower {
+            font-size: 3rem;
+            animation: spin-flower 2s infinite linear;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--warm-gray);
+            letter-spacing: 2px;
+        }
+
+        @keyframes spin-flower {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            color: var(--charcoal);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(232, 165, 184, 0.4);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(232, 165, 184, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.6);
+        }
+
+        /* Falling Petals */
+        .petal {
+            position: fixed;
+            top: -50px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Project Filter */
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--light-gray);
+            background: transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--warm-gray);
+            transition: all 0.4s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            border-color: transparent;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(232, 165, 184, 0.3);
+        }
+
+        .project-card {
+            transition: all 0.5s ease;
+        }
+
+        .project-card.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        /* 3D Tilt Effect */
+        .project-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .project-card-inner {
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        /* Skill Bars Animation */
+        .skill-bar-fill {
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 1.5s ease-out;
+        }
+
+        .skill-bar-fill.animate {
+            animation: fill-bar 1.5s ease-out forwards;
+        }
+
+        /* Form Validation Styles */
+        .form-group input.error, .form-group textarea.error {
+            border-bottom-color: #ff6b6b;
+        }
+
+        .form-group input.success, .form-group textarea.success {
+            border-bottom-color: #51cf66;
+        }
+
+        .validation-message {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .validation-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .validation-message.error {
+            color: #ff6b6b;
+        }
+
+        .validation-message.success {
+            color: #51cf66;
+        }
+
+        /* Quote Rotation */
+        .quote-container {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .rotating-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+        }
+
+        .rotating-quote.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--warm-gray);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .visitor-counter span {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
         }
 
         /* Görsel Yönetimi - Tüm görsellerin taşmasını önle */
@@ -213,6 +503,15 @@
             border-bottom-color: var(--soft-pink);
             padding: 1.2rem 5%;
             background: rgba(255, 252, 248, 0.95);
+        }
+
+        [data-theme="dark"] nav {
+            background: rgba(26, 26, 46, 0.9);
+            border-bottom-color: var(--light-gray);
+        }
+
+        [data-theme="dark"] nav.scrolled {
+            background: rgba(26, 26, 46, 0.95);
         }
 
         .logo {
@@ -581,6 +880,11 @@
             overflow: hidden;
         }
 
+        [data-theme="dark"] .value-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--light-gray);
+        }
+
         .value-item::before {
             content: '';
             position: absolute;
@@ -596,6 +900,10 @@
         .value-item:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(232, 165, 184, 0.2);
+        }
+
+        [data-theme="dark"] .value-item:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .value-item:hover::before {
@@ -761,6 +1069,10 @@
             animation: shimmer 10s infinite linear;
         }
 
+        [data-theme="dark"] .skills-section::before {
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
         @keyframes shimmer {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -787,9 +1099,18 @@
             height: 100%;
         }
 
+        [data-theme="dark"] .skill-category {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
         .skill-category:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .skill-category:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .skill-category:nth-child(1) h4 {
@@ -838,6 +1159,10 @@
             transition: all 0.3s ease;
         }
 
+        [data-theme="dark"] .skill-list li {
+            border-bottom-color: rgba(255,255,255,0.1);
+        }
+
         .skill-list li:hover {
             color: var(--charcoal);
             padding-left: 10px;
@@ -863,6 +1188,10 @@
             background: rgba(0,0,0,0.08);
             border-radius: 3px;
             overflow: hidden;
+        }
+
+        [data-theme="dark"] .skill-bar-bg {
+            background: rgba(255,255,255,0.1);
         }
 
         .skill-bar-fill {
@@ -913,10 +1242,20 @@
             background: white;
         }
 
+        [data-theme="dark"] .contact-link {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--light-gray);
+        }
+
         .contact-link:hover {
             color: var(--rose-deep);
             background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
             transform: translateX(10px);
+        }
+
+        [data-theme="dark"] .contact-link:hover {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            color: white;
         }
 
         .social-row {
@@ -976,6 +1315,11 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.08);
             position: relative;
             overflow: hidden;
+        }
+
+        [data-theme="dark"] .contact-form {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
         }
 
         .contact-form::before {
@@ -1082,6 +1426,10 @@
             color: var(--warm-gray);
             font-size: 0.85rem;
             letter-spacing: 1px;
+        }
+
+        [data-theme="dark"] footer {
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
         }
 
         .footer-quote {
@@ -1209,6 +1557,10 @@
             .contact-form {
                 padding: 2rem;
             }
+
+            .theme-toggle, .visitor-counter {
+                display: none;
+            }
         }
 
         /* Mobil görünüm için (768px ve altı) - Hamburger Menü */
@@ -1236,6 +1588,10 @@
                 transition: right 0.4s ease;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.1);
                 z-index: 999;
+            }
+
+            [data-theme="dark"] .nav-links {
+                background: rgba(26, 26, 46, 0.98);
             }
 
             /* Checkbox checked olduğunda menüyü aç */
@@ -1445,6 +1801,23 @@
 <base target="_blank">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-flower">✦</div>
+        <div class="loading-text">Yükleniyor...</div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">☀</button>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" title="Yukarı Çık">↑</button>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        <span>✦</span> <span id="visitorCount">0</span> ziyaretçi
+    </div>
+
     <!-- Organik Arka Plan -->
     <div class="organic-bg">
         <div class="blob blob-1"></div>
@@ -1498,7 +1871,7 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <span class="hero-greeting">Merhaba, ben</span>
+                <span class="hero-greeting" id="typewriter"></span>
                 <h1>
                     M.Vildan
                     <span>BABAER</span>
@@ -1566,8 +1939,18 @@
             <span class="section-number">02</span>
             <h2 class="section-title">Seçilmiş İşler</h2>
         </div>
+        
+        <!-- Filter Buttons -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn" data-filter="web">Web Tasarım</button>
+            <button class="filter-btn" data-filter="ui">UI/UX</button>
+            <button class="filter-btn" data-filter="brand">Marka Kimliği</button>
+            <button class="filter-btn" data-filter="photo">Fotoğraf</button>
+        </div>
+
         <div class="projects-grid">
-            <div class="project-card">
+            <div class="project-card" data-category="web">
                 <div class="project-image">
                     <div class="project-overlay">
                         <span class="project-category">Web Tasarım</span>
@@ -1576,7 +1959,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card" data-category="ui">
                 <div class="project-image">
                     <div class="project-overlay">
                         <span class="project-category">UI/UX</span>
@@ -1585,7 +1968,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card" data-category="brand">
                 <div class="project-image">
                     <div class="project-overlay">
                         <span class="project-category">Marka Kimliği</span>
@@ -1594,7 +1977,7 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card" data-category="photo">
                 <div class="project-image">
                     <div class="project-overlay">
                         <span class="project-category">Fotoğraf</span>
@@ -1624,7 +2007,7 @@
                 </ul>
                 <div class="skill-bar">
                     <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 95%;"></div>
+                        <div class="skill-bar-fill" data-width="95"></div>
                     </div>
                 </div>
             </div>
@@ -1639,7 +2022,7 @@
                 </ul>
                 <div class="skill-bar">
                     <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 85%;"></div>
+                        <div class="skill-bar-fill" data-width="85"></div>
                     </div>
                 </div>
             </div>
@@ -1654,7 +2037,7 @@
                 </ul>
                 <div class="skill-bar">
                     <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" style="width: 90%;"></div>
+                        <div class="skill-bar-fill" data-width="90"></div>
                     </div>
                 </div>
             </div>
@@ -1695,18 +2078,21 @@
                 </div>
             </div>
 
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('Mesajınız alındı! En kısa sürede dönüş yapacağım.');">
+            <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <input type="text" id="name" placeholder=" " required>
                     <label for="name">Adınız</label>
+                    <div class="validation-message" id="nameValidation"></div>
                 </div>
                 <div class="form-group">
                     <input type="email" id="email" placeholder=" " required>
                     <label for="email">Email Adresiniz</label>
+                    <div class="validation-message" id="emailValidation"></div>
                 </div>
                 <div class="form-group">
                     <textarea id="message" placeholder=" " required></textarea>
                     <label for="message">Projenizden bahsedin...</label>
+                    <div class="validation-message" id="messageValidation"></div>
                 </div>
                 <button type="submit" class="submit-btn">Gönder</button>
             </form>
@@ -1715,12 +2101,256 @@
 
     <!-- Footer -->
     <footer>
-        <p class="footer-quote">"Yaratmak, ruhun nefes almasıdır"</p>
+        <div class="quote-container">
+            <p class="rotating-quote active" id="quote1">"Yaratmak, ruhun nefes almasıdır"</p>
+            <p class="rotating-quote" id="quote2">"Tasarım, görünmeyeni görünür kılmaktır"</p>
+            <p class="rotating-quote" id="quote3">"Detaylar, mükemmelliğin mimarıdır"</p>
+            <p class="rotating-quote" id="quote4">"Kod şiir, tasarım duygudur"</p>
+        </div>
         <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
         <p class="footer-hearts">✦ ✧ ✦</p>
     </footer>
 
     <script>
+        // 1. Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 150);
+        });
+
+        // 2. Typewriter Effect
+        const typewriterText = "Merhaba, ben";
+        const typewriterElement = document.getElementById('typewriter');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < typewriterText.length) {
+                typewriterElement.textContent += typewriterText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        setTimeout(typeWriter, 2000);
+
+        // 3. Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☾';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☾' : '☀';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // 4. Project Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    
+                    if (filter === 'all' || category === filter) {
+                        card.classList.remove('hidden');
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            card.classList.add('hidden');
+                        }, 500);
+                    }
+                });
+            });
+        });
+
+        // 5. Skill Bars Animation on Scroll
+        const skillBars = document.querySelectorAll('.skill-bar-fill');
+        
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.getAttribute('data-width');
+                    entry.target.style.width = width + '%';
+                    entry.target.style.transform = 'scaleX(1)';
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillBars.forEach(bar => skillObserver.observe(bar));
+
+        // 6. Form Validation
+        const contactForm = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showValidation(input, isValid, message) {
+            const validationDiv = document.getElementById(input.id + 'Validation');
+            
+            if (isValid) {
+                input.classList.remove('error');
+                input.classList.add('success');
+                validationDiv.textContent = '✓ ' + message;
+                validationDiv.className = 'validation-message success show';
+            } else {
+                input.classList.remove('success');
+                input.classList.add('error');
+                validationDiv.textContent = '✗ ' + message;
+                validationDiv.className = 'validation-message error show';
+            }
+        }
+
+        nameInput.addEventListener('blur', () => {
+            if (nameInput.value.length < 2) {
+                showValidation(nameInput, false, 'En az 2 karakter olmalı');
+            } else {
+                showValidation(nameInput, true, 'Geçerli isim');
+            }
+        });
+
+        emailInput.addEventListener('blur', () => {
+            if (!validateEmail(emailInput.value)) {
+                showValidation(emailInput, false, 'Geçerli email adresi girin');
+            } else {
+                showValidation(emailInput, true, 'Geçerli email');
+            }
+        });
+
+        messageInput.addEventListener('blur', () => {
+            if (messageInput.value.length < 10) {
+                showValidation(messageInput, false, 'En az 10 karakter olmalı');
+            } else {
+                showValidation(messageInput, true, 'Mesajınız uygun');
+            }
+        });
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const isNameValid = nameInput.value.length >= 2;
+            const isEmailValid = validateEmail(emailInput.value);
+            const isMessageValid = messageInput.value.length >= 10;
+
+            if (isNameValid && isEmailValid && isMessageValid) {
+                alert('Mesajınız alındı! En kısa sürede dönüş yapacağım.');
+                contactForm.reset();
+                document.querySelectorAll('.validation-message').forEach(v => v.classList.remove('show'));
+                document.querySelectorAll('.form-group input, .form-group textarea').forEach(i => {
+                    i.classList.remove('success', 'error');
+                });
+            } else {
+                alert('Lütfen tüm alanları doğru doldurun.');
+            }
+        });
+
+        // 7. Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 8. Falling Petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = ['✦', '✧', '⋆', '★'][Math.floor(Math.random() * 4)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.color = ['var(--dusty-rose)', 'var(--lavender-deep)', 'var(--peach-deep)', 'var(--sage)'][Math.floor(Math.random() * 4)];
+            
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        setInterval(createPetal, 3000);
+
+        // 9. Rotating Quotes
+        const quotes = document.querySelectorAll('.rotating-quote');
+        let currentQuote = 0;
+
+        function rotateQuotes() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+
+        setInterval(rotateQuotes, 5000);
+
+        // 10. Visitor Counter (using localStorage)
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount');
+            if (!count) {
+                count = Math.floor(Math.random() * 1000) + 500;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitorCount').textContent = count;
+        }
+
+        updateVisitorCount();
+
+        // 11. 3D Tilt Effect for Project Cards
+        projectCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+
         // Scroll animasyonları
         const observerOptions = {
             threshold: 0.1,

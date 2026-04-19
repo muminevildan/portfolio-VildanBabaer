@@ -1238,9 +1238,302 @@
                 padding-top: 60px;
             }
         }
+        /* ==========================================
+   JAVASCRIPT ÖZELLİKLERİ - EKLEMELER
+   ========================================== */
+
+/* 1. Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-flower {
+    font-size: 3rem;
+    animation: spin-flower 2s infinite linear;
+    background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.loading-text {
+    margin-top: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--warm-gray);
+    letter-spacing: 2px;
+}
+
+@keyframes spin-flower {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* 2. Theme Toggle */
+.theme-toggle {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: all 0.4s ease;
+    color: var(--charcoal);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 8px 30px rgba(232, 165, 184, 0.4);
+}
+
+/* 3. Back to Top */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 20px rgba(232, 165, 184, 0.4);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(232, 165, 184, 0.6);
+}
+
+/* 4. Falling Petals */
+.petal {
+    position: fixed;
+    top: -50px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(360deg); }
+}
+
+/* 5. Visitor Counter */
+.visitor-counter {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.8rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--warm-gray);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.visitor-counter span {
+    background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
+}
+
+/* 6. Rotating Quotes */
+.quote-container {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.rotating-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.rotating-quote.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 7. Dark Mode Variables */
+[data-theme="dark"] {
+    --cream: #1a1a2e;
+    --soft-pink: #2d2d44;
+    --dusty-rose: #e8a4b8;
+    --rose-deep: rgb(240, 184, 200);
+    --sage: #4a5d5f;
+    --sage-light: #3d4f52;
+    --charcoal: #f5f0eb;
+    --warm-gray: #c8c0b8;
+    --light-gray: #4a4a6a;
+    --lavender: #d4b8e8;
+    --lavender-deep: #c8a8e0;
+    --peach: #f0c8b8;
+    --peach-deep: #e8b8a0;
+    --blush: #2a2a3e;
+}
+
+[data-theme="dark"] .loading-screen {
+    background: var(--cream);
+}
+
+[data-theme="dark"] .visitor-counter {
+    background: rgba(40, 40, 60, 0.9);
+    border: 1px solid var(--light-gray);
+}
+
+[data-theme="dark"] nav {
+    background: rgba(26, 26, 46, 0.9);
+    border-bottom-color: var(--light-gray);
+}
+
+[data-theme="dark"] nav.scrolled {
+    background: rgba(26, 26, 46, 0.95);
+}
+
+[data-theme="dark"] .nav-links {
+    background: rgba(26, 26, 46, 0.98);
+}
+
+[data-theme="dark"] .project-card {
+    background: rgba(40, 40, 60, 0.9);
+    border: 1px solid var(--light-gray);
+}
+
+[data-theme="dark"] .filter-btn {
+    background: rgba(40, 40, 60, 0.9);
+    border-color: var(--light-gray);
+    color: var(--warm-gray);
+}
+
+[data-theme="dark"] .stat-item {
+    background: rgba(40, 40, 60, 0.9);
+    border: 1px solid var(--light-gray);
+}
+
+[data-theme="dark"] footer {
+    background: linear-gradient(180deg, transparent, rgba(240, 184, 200 0.9));
+    color: var(--warm-gray);
+    border-top: 1px solid var(--rose-deep);
+}
+
+/* Mobil Düzenlemeler - Theme Toggle Görünür */
+@media (max-width: 968px) {
+    .theme-toggle {
+        top: 80px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        display: flex !important;
+    }
+    
+    .visitor-counter {
+        bottom: 20px;
+        left: 20px;
+        padding: 0.6rem 1rem;
+        font-size: 0.7rem;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-toggle {
+        top: 70px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+}
     </style>
 </head>
 <body>
+        <!-- 1. Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-flower">✦</div>
+        <div class="loading-text">Yükleniyor...</div>
+    </div>
+
+    <!-- 2. Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">☀</button>
+
+    <!-- 3. Back to Top -->
+    <button class="back-to-top" id="backToTop" title="Yukarı Çık">↑</button>
+
+    <!-- 5. Visitor Counter -->
+    <div class="visitor-counter">
+        <span>✦</span> <span id="visitorCount">0</span> ziyaretçi
+    </div>
     <!-- Organik Arka Plan -->
     <div class="organic-bg">
         <div class="blob blob-1"></div>
@@ -1249,9 +1542,9 @@
     </div>
 
     <!-- Dekoratif Çiçekler -->
-    <div class="flower-decor flower-1">✿</div>
-    <div class="flower-decor flower-2">❀</div>
-    <div class="flower-decor flower-3">✾</div>
+    <div class="flower-decor flower-1">🐾</div>
+    <div class="flower-decor flower-2">★</div>
+    <div class="flower-decor flower-3">✦</div>
 
     <!-- Navigasyon - Hamburger Menü ile -->
     <nav id="navbar">
@@ -1570,9 +1863,14 @@
         </div>
     </section>
 
-    <!-- Footer -->
+        <!-- Footer -->
     <footer>
-        <p class="footer-quote">"Yaratmak, ruhun nefes almasıdır"</p>
+        <div class="quote-container">
+            <p class="rotating-quote active" id="quote1">"Yaratmak, ruhun nefes almasıdır"</p>
+            <p class="rotating-quote" id="quote2">"Tasarım, görünmeyeni görünür kılmaktır"</p>
+            <p class="rotating-quote" id="quote3">"Detaylar, mükemmelliğin mimarıdır"</p>
+            <p class="rotating-quote" id="quote4">"Kod şiir, tasarım duygudur"</p>
+        </div>
         <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
         <p class="footer-hearts">✦ ✧ ✦</p>
     </footer>
@@ -1594,6 +1892,91 @@
     </div>
 
     <script>
+                // 1. Loading Screen - 1.5 saniye
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 150);
+        });
+
+        // 2. Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☾';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☾' : '☀';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // 3. Back to Top
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 4. Falling Petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = ['✦', '✧', '⋆', '★'][Math.floor(Math.random() * 4)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.color = ['var(--dusty-rose)', 'var(--lavender-deep)', 'var(--peach-deep)', 'var(--sage)'][Math.floor(Math.random() * 4)];
+            
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        setInterval(createPetal, 3000);
+
+        // 5. Visitor Counter
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount');
+            if (!count) {
+                count = Math.floor(Math.random() * 1000) + 500;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitorCount').textContent = count;
+        }
+
+        updateVisitorCount();
+
+        // 6. Rotating Quotes
+        const quotes = document.querySelectorAll('.rotating-quote');
+        let currentQuote = 0;
+
+        function rotateQuotes() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+
+        setInterval(rotateQuotes, 5000);
         // Video Modal Functions - 7 Video Projesi
         const projectData = {
             'project1': {
