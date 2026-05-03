@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımda — Vildan Babaer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Ana Renkler */
+            --cream: #FFFCF8;
+            --soft-pink: #FFE4EC;
+            --dusty-rose: #f596b1;
+            --rose-deep: #D4849C;
+            --sage: #B8D4C0;
+            --sage-light: #D4E8D8;
+            --charcoal: #2C2C2C;
+            --warm-gray: #6B6B6B;
+            --light-gray: #E8E8E8;
+            
+            /* Yeni Feminen Renkler */
+            --lavender: #e2c6ed;
+            --lavender-deep: #c09dd0;
+            --peach: #FFD4C4;
+            --peach-deep: #F5B8A0;
+            --coral: #FFB5A7;
+            --coral-soft: #FFD4CC;
+            --mint: #C4F0E0;
+            --mint-soft: #E0F5EE;
+            --champagne: #F5E6D3;
+            --gold: #E8D4A8;
+            --blush: #F8E0E0;
+            --sky-blue: #D4E8F5;
+            --butter: #FFF4D4;
+        }
+
+        /* Dark Mode Variables - DÜZELTİLMİŞ OKUNABİLİRLİK */
+        [data-theme="dark"] {
+            --cream: #1a1a2e;
+            --soft-pink: #2d2d44;
+            --dusty-rose: #e8a4b8;
+            --rose-deep: #f0b8c8;
+            --sage: #4a5d5f;
+            --sage-light: #3d4f52;
+            --charcoal: #f5f0eb;
+            --warm-gray: #c8c0b8;
+            --light-gray: #4a4a6a;
+            --lavender: #d4b8e8;
+            --lavender-deep: #c8a8e0;
+            --peach: #f0c8b8;
+            --peach-deep: #e8b8a0;
+            --blush: #2a2a3e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 50%, var(--cream) 100%);
+            background-attachment: fixed;
+            color: var(--charcoal);
+            line-height: 1.8;
+            font-weight: 300;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-flower {
+            font-size: 3rem;
+            animation: spin-flower 2s infinite linear;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--warm-gray);
+            letter-spacing: 2px;
+        }
+
+        @keyframes spin-flower {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            color: var(--charcoal);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(232, 165, 184, 0.4);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(232, 165, 184, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.6);
+        }
+
+        /* Falling Petals */
+        .petal {
+            position: fixed;
+            top: -50px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--warm-gray);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        [data-theme="dark"] .visitor-counter {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
+        .visitor-counter span {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
+        }
+
+        /* Görsel Yönetimi */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        ::selection {
+            background: var(--dusty-rose);
+            color: white;
+        }
+
+        /* Organik Arka Plan */
+        .organic-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            top: -150px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--sage), var(--mint));
+            bottom: 5%;
+            left: -150px;
+            animation-delay: 3s;
+        }
+
+        .blob-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, var(--peach), var(--coral-soft));
+            top: 35%;
+            right: 5%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            25% { transform: translate(30px, -30px) scale(1.1) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) scale(0.95) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) scale(1.05) rotate(3deg); }
+        }
+
+        /* Dekoratif çiçekler */
+        .flower-decor {
+            position: fixed;
+            font-size: 2rem;
+            opacity: 0.15;
+            animation: rotate-flower 20s infinite linear;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .flower-1 { top: 15%; left: 5%; animation-delay: 0s; }
+        .flower-2 { top: 45%; right: 8%; animation-delay: -5s; font-size: 1.5rem; }
+        .flower-3 { bottom: 25%; left: 12%; animation-delay: -10s; font-size: 1.8rem; }
+
+        @keyframes rotate-flower {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navigasyon */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 252, 248, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--soft-pink);
+            padding: 1.2rem 5%;
+            background: rgba(255, 252, 248, 0.95);
+        }
+
+        [data-theme="dark"] nav {
+            background: rgba(26, 26, 46, 0.9);
+            border-bottom-color: var(--light-gray);
+        }
+
+        [data-theme="dark"] nav.scrolled {
+            background: rgba(26, 26, 46, 0.95);
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: var(--charcoal);
+            text-decoration: none;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep), var(--peach-deep));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Hamburger Menü */
+        #menu-toggle {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--charcoal);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links a {
+            color: var(--warm-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep));
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--rose-deep);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--rose-deep);
+        }
+
+        .nav-links a.active::before {
+            width: 100%;
+        }
+
+        /* ==========================================
+           HERO BÖLÜMÜ - DÜZELTİLMİŞ
+           ========================================== */
+        .page-hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12rem 10% 6rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-greeting {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            display: block;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .page-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .page-title span {
+            display: block;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--peach-deep), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--warm-gray);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.9;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================================
+           GENEL BÖLÜM AYARLARI - DÜZELTİLMİŞ
+           ========================================== */
+        section {
+            padding: 6rem 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* ==========================================
+           HİKAYE BÖLÜMÜ - DÜZELTİLMİŞ ORANLAR
+           ========================================== */
+        .story-section {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 5rem;
+            align-items: start;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .story-image-wrap {
+            position: relative;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease;
+            margin-top: 2rem;
+        }
+
+        .story-image-wrap.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .story-image {
+            width: 100%;
+            max-width: 380px;
+            height: 480px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 200px 200px 0 0;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.1),
+                0 0 0 6px var(--soft-pink),
+                0 0 0 12px var(--lavender),
+                0 0 0 18px var(--sage-light);
+            margin: 0 auto;
+            transition: all 0.4s ease;
+        }
+
+        .story-image:hover {
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.15),
+                0 0 0 6px var(--dusty-rose),
+                0 0 0 12px var(--lavender-deep),
+                0 0 0 18px var(--sage);
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(0.95);
+            transition: all 0.6s ease;
+        }
+
+        .story-image-wrap:hover .story-image img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.05);
+        }
+
+        .story-badge {
+            position: absolute;
+            bottom: -12px;
+            right: 10%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.3);
+            animation: float-tag 4s infinite ease-in-out;
+            white-space: nowrap;
+            color: var(--charcoal);
+        }
+
+        @keyframes float-tag {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .story-content {
+            padding-top: 1rem;
+        }
+
+        .story-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+            line-height: 1.3;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .story-content h2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-content h2 span {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .story-content p {
+            margin-bottom: 1.2rem;
+            color: var(--warm-gray);
+            font-size: 1rem;
+            line-height: 1.9;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .story-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 2rem 0;
+            padding-left: 1.5rem;
+            border-left: 3px solid;
+            border-image: linear-gradient(180deg, var(--dusty-rose), var(--lavender-deep)) 1;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease 0.3s;
+            line-height: 1.6;
+        }
+
+        .story-quote.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ==========================================
+           DEĞERLER BÖLÜMÜ - DÜZELTİLMİŞ
+           ========================================== */
+        .values-section {
+            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--lavender) 50%, var(--peach) 100%);
+            margin: 0;
+            padding: 5rem 8%;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .values-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: shimmer 10s infinite linear;
+        }
+
+        [data-theme="dark"] .values-section::before {
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 0.8rem;
+        }
+
+        .section-header p {
+            color: var(--warm-gray);
+            font-size: 1rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        [data-theme="dark"] .value-card {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
+        .value-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .value-card:nth-child(1) { transition-delay: 0.1s; }
+        .value-card:nth-child(2) { transition-delay: 0.2s; }
+        .value-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .value-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+            display: block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .value-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--charcoal);
+        }
+
+        .value-desc {
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+           DENEYİM BÖLÜMÜ - DÜZELTİLMİŞ
+           ========================================== */
+        .experience-section {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+
+        [data-theme="dark"] .experience-section {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
+        .experience-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .experience-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            color: var(--charcoal);
+        }
+
+        .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .experience-item {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 2.5rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        [data-theme="dark"] .experience-item {
+            border-bottom-color: var(--light-gray);
+        }
+
+        .experience-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .experience-item:nth-child(1) { transition-delay: 0.1s; }
+        .experience-item:nth-child(2) { transition-delay: 0.2s; }
+        .experience-item:nth-child(3) { transition-delay: 0.3s; }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-item:hover {
+            background: linear-gradient(90deg, transparent, rgba(255, 228, 236, 0.3), transparent);
+            margin: 0 -1.5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            border-radius: 15px;
+        }
+
+        [data-theme="dark"] .experience-item:hover {
+            background: linear-gradient(90deg, transparent, rgba(255, 228, 236, 0.1), transparent);
+        }
+
+        .exp-year {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--dusty-rose);
+            font-style: italic;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .exp-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--charcoal);
+            font-weight: 500;
+        }
+
+        .exp-company {
+            color: var(--warm-gray);
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .exp-desc {
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+           KİŞİSEL BÖLÜM - DÜZELTİLMİŞ
+           ========================================== */
+        .personal-section {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 4rem;
+            align-items: center;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .personal-content h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: var(--charcoal);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .personal-content h2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .personal-content h2 span {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .personal-content p {
+            margin-bottom: 1.2rem;
+            color: var(--warm-gray);
+            font-size: 1rem;
+            line-height: 1.9;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .personal-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .interests-list {
+            margin-top: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        .interest-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        [data-theme="dark"] .interest-item {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+
+        .interest-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .interest-item:nth-child(1) { transition-delay: 0.1s; }
+        .interest-item:nth-child(2) { transition-delay: 0.2s; }
+        .interest-item:nth-child(3) { transition-delay: 0.3s; }
+        .interest-item:nth-child(4) { transition-delay: 0.4s; }
+
+        .interest-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(232, 165, 184, 0.2);
+        }
+
+        [data-theme="dark"] .interest-item:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .interest-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .interest-text {
+            color: var(--charcoal);
+            font-size: 0.9rem;
+        }
+
+        .personal-visual {
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+            display: flex;
+            justify-content: center;
+        }
+
+        .personal-visual.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .visual-circle {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender), var(--peach));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse-glow 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 50px rgba(232, 165, 184, 0.3); }
+            50% { box-shadow: 0 0 80px rgba(232, 165, 184, 0.5); }
+        }
+
+        .visual-inner {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-style: italic;
+            color: var(--dusty-rose);
+        }
+
+        /* Quote Rotation */
+        .quote-container {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .rotating-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+        }
+
+        .rotating-quote.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(255, 228, 236, 0.5));
+            color: var(--warm-gray);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        [data-theme="dark"] footer {
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
+        }
+
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-hearts {
+            margin-top: 0.8rem;
+            font-size: 1.2rem;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ==========================================
+           RESPONSIVE TASARIM - MEDIA QUERIES
+           ========================================== */
+
+        /* Tablet için (1024px ve altı) */
+        @media (max-width: 1024px) {
+            .story-section {
+                grid-template-columns: 1fr 2fr;
+                gap: 3rem;
+            }
+
+            .story-image {
+                max-width: 320px;
+                height: 400px;
+            }
+
+            .personal-section {
+                grid-template-columns: 2fr 1.5fr;
+                gap: 3rem;
+            }
+
+            .visual-circle {
+                width: 240px;
+                height: 240px;
+            }
+
+            .visual-inner {
+                width: 200px;
+                height: 200px;
+                font-size: 3rem;
+            }
+        }
+
+        /* Tablet ve küçük ekranlar için (968px ve altı) */
+        @media (max-width: 968px) {
+            .story-section,
+            .personal-section {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .story-image-wrap {
+                order: -1;
+                margin-top: 0;
+            }
+
+            .story-image {
+                max-width: 280px;
+                height: 360px;
+            }
+
+            .story-badge {
+                right: 15%;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .value-card {
+                padding: 2rem;
+            }
+
+            .experience-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                padding: 1.5rem 0;
+            }
+
+            .exp-year {
+                font-size: 1rem;
+            }
+
+            .experience-item:hover {
+                margin: 0;
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .page-hero {
+                min-height: 60vh;
+                padding: 10rem 5% 4rem;
+            }
+
+            .interests-list {
+                grid-template-columns: 1fr;
+            }
+
+            .personal-visual {
+                order: -1;
+            }
+
+            .visual-circle {
+                width: 220px;
+                height: 220px;
+            }
+
+            .visual-inner {
+                width: 180px;
+                height: 180px;
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 4rem 5%;
+            }
+
+            .values-section {
+                padding: 4rem 5%;
+            }
+
+            .experience-section {
+                padding: 2rem;
+            }
+
+            .theme-toggle, .visitor-counter {
+                display: none;
+            }
+        }
+
+        /* Mobil görünüm için (768px ve altı) - Hamburger Menü */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(255, 252, 248, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                padding: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                z-index: 999;
+            }
+
+            [data-theme="dark"] .nav-links {
+                background: rgba(26, 26, 46, 0.98);
+            }
+
+            #menu-toggle:checked ~ .nav-links {
+                right: 0;
+            }
+
+            #menu-toggle:checked ~ .hamburger span:nth-child(1) {
+                transform: translateY(10.5px) rotate(45deg);
+            }
+
+            #menu-toggle:checked ~ .hamburger span:nth-child(2) {
+                opacity: 0;
+            }
+
+            #menu-toggle:checked ~ .hamburger span:nth-child(3) {
+                transform: translateY(-10.5px) rotate(-45deg);
+            }
+
+            #menu-toggle:checked ~ .menu-overlay {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.3);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s ease;
+                z-index: 998;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+
+            .page-hero {
+                padding: 8rem 5% 3rem;
+                min-height: 50vh;
+            }
+
+            .page-greeting {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+                line-height: 1.8;
+            }
+
+            .story-content h2,
+            .personal-content h2,
+            .experience-section h2,
+            .section-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .story-quote {
+                font-size: 1.2rem;
+                padding-left: 1rem;
+            }
+
+            .story-content p,
+            .personal-content p {
+                font-size: 0.95rem;
+            }
+
+            .value-icon {
+                font-size: 2rem;
+            }
+
+            .value-title {
+                font-size: 1.2rem;
+            }
+
+            .value-desc {
+                font-size: 0.85rem;
+            }
+
+            .exp-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .exp-desc {
+                font-size: 0.85rem;
+            }
+
+            .story-badge {
+                display: none;
+            }
+
+            footer {
+                padding: 2.5rem 1rem;
+            }
+        }
+
+        /* Küçük mobil ekranlar için (480px ve altı) */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .story-image {
+                max-width: 240px;
+                height: 320px;
+                box-shadow: 
+                    0 15px 40px rgba(0,0,0,0.1),
+                    0 0 0 4px var(--soft-pink),
+                    0 0 0 8px var(--lavender),
+                    0 0 0 12px var(--sage-light);
+            }
+
+            .visual-circle {
+                width: 180px;
+                height: 180px;
+            }
+
+            .visual-inner {
+                width: 150px;
+                height: 150px;
+                font-size: 2rem;
+            }
+
+            .experience-section {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .interest-item {
+                padding: 0.7rem;
+            }
+
+            .interest-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+
+            .interest-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Yatay mobil görünüm için */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .page-hero {
+                min-height: auto;
+                padding-top: 80px;
+                padding-bottom: 40px;
+            }
+
+            .story-section {
+                grid-template-columns: 1fr 1.5fr;
+                gap: 2rem;
+            }
+
+            .story-image {
+                max-width: 200px;
+                height: 260px;
+            }
+
+            .personal-section {
+                grid-template-columns: 1.5fr 1fr;
+                gap: 2rem;
+            }
+
+            .visual-circle {
+                width: 160px;
+                height: 160px;
+            }
+
+            .visual-inner {
+                width: 130px;
+                height: 130px;
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                padding-top: 60px;
+                justify-content: flex-start;
+            }
+        }
+    
+        /* Nav Badge & Icon Link */
+        .nav-icon-link {
+            display: flex; align-items: center; gap: 0.3rem; position: relative;
+        }
+        .nav-badge {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            color: white; font-size: 0.65rem; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-weight: 600; display: none;
+            transition: transform 0.3s ease;
+        }
+</style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-flower">✦</div>
+        <div class="loading-text">Yükleniyor...</div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">☀</button>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" title="Yukarı Çık">↑</button>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        <span>✦</span> <span id="visitorCount">0</span> ziyaretçi
+    </div>
+
+    <!-- Organik Arka Plan -->
+    <div class="organic-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Dekoratif Çiçekler -->
+    <div class="flower-decor flower-2">❀</div>
+    <div class="flower-decor flower-1">✦</div>
+    <div class="flower-decor flower-3">★</div>
+
+    <!-- Navigasyon - Hamburger Menü ile -->
+    <nav id="navbar">
+        <a href="index.html" class="logo">✦ V. Portfolyo</a>
+        
+        <input type="checkbox" id="menu-toggle">
+        
+        <label for="menu-toggle" class="hamburger" aria-label="Menüyü Aç/Kapat">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        
+        <label for="menu-toggle" class="menu-overlay"></label>
+        
+                        <ul class="nav-links">
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="hakkimda.html">Hakkımda</a></li>
+            <li><a href="projeler.html" >Projeler</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+            <li><a href="mesajlar.html">Mesajlar</a></li>
+            <li><a href="urunler.html">Ürünler</a></li>
+            <li><a href="favoriler.html" class="nav-icon-link">♡ <span class="nav-badge" id="favoriBadge">0</span></a></li>
+            <li><a href="sepet.html" class="nav-icon-link">🛒 <span class="nav-badge" id="sepetBadge">0</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div>
+            <span class="page-greeting">Merhaba, ben</span>
+            <h1 class="page-title">
+                M.Vildan
+                <span>BABAER</span>
+            </h1>
+            <p class="page-subtitle">
+                Tasarım ve yazılım disiplinlerini bir arada yürüten, kullanıcı deneyimi odaklı bir geliştiriciyim. Görsel estetiği teknik altyapıyla birleştirerek, hem işlevsel hem de modern dijital çözümler üretmeye odaklanıyorum.
+            </p>
+        </div>
+    </section>
+
+    <!-- Hikaye -->
+    <section class="story-section">
+        <div class="story-image-wrap">
+            <div class="story-image">
+                <img src="vildan.jfif" alt="Vildan Babaer">
+            </div>
+            <span class="story-badge">✦ Yaratıcı Ruh</span>
+        </div>
+        <div class="story-content">
+            <h2>Kod ve <span>estetik</span> arasında</h2>
+            <p>
+                <strong>Tasarım & UI/UX:</strong> Adobe Photoshop ve Animate kullanarak dijital varlıklar oluşturuyor; tipografi, renk teorisi ve UI/UX prensipleri doğrultusunda kullanıcı dostu arayüzler tasarlıyorum.
+            </p>
+            <p>
+                <strong>Frontend & Web Animasyon:</strong> Tasarımları HTML5, CSS3 ve JavaScript kullanarak web ortamına aktarıyor, dinamik ve yaşayan arayüzler geliştiriyorum.
+            </p>
+            <p>
+                <strong>Backend & Veritabanı:</strong> Java, C# ve PHP dillerinde projeler geliştirirken, MySQL ve SQL sistemleri ile veritabanı yönetimi ve optimizasyonu sağlıyorum.
+            </p>
+            <blockquote class="story-quote">
+                "Tasarım ve yazılımı iki ayrı dil değil, tek bir bütün olarak görüyorum."
+            </blockquote>
+            <p>
+                Ankara'da yaşıyorum. Boş zamanlarımda analog fotoğrafçılık yapıyor, kitap okuyor ve psikoloji ile ilgileniyorum. Bu hobiler, dijital dünyadan uzaklaşıp somut şeyler üretme ihtiyacımdan doğdu.
+            </p>
+        </div>
+    </section>
+
+    <!-- Değerler -->
+    <section class="values-section">
+        <div class="section-header">
+            <h2>Değerlerim</h2>
+            <p>Her projede beni yönlendiren ilkeler</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <span class="value-icon">✦</span>
+                <h3 class="value-title">Yaratıcılık</h3>
+                <p class="value-desc">
+                    Sınırları zorlamak ve alışılmışın dışında çözümler üretmek. Her projede yeni bir şeyler denemekten korkmam.
+                </p>
+            </div>
+            <div class="value-card">
+                <span class="value-icon">✧</span>
+                <h3 class="value-title">Empati</h3>
+                <p class="value-desc">
+                    Kullanıcının yerine kendimi koymak. Teknik mükemmellik, insanları anlamadan anlamsızdır.
+                </p>
+            </div>
+            <div class="value-card">
+                <span class="value-icon">✦</span>
+                <h3 class="value-title">Mükemmellik</h3>
+                <p class="value-desc">
+                    Detaylarda gizli olanı bulmak. Bir pikselin bile tesadüfi olmadığına inanırım.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deneyim -->
+    <section class="experience-section">
+        <h2>Deneyim</h2>
+        <div class="experience-list">
+            <div class="experience-item">
+                <div class="exp-year">2024 — Günümüz</div>
+                <div class="exp-content">
+                    <h3>Full Stack Developer & UI Designer</h3>
+                    <span class="exp-company">Freelance / İstanbul</span>
+                    <p class="exp-desc">
+                        Web ve mobil projelerde hem frontend hem backend geliştirme yapıyor, aynı zamanda kullanıcı arayüzü tasarımlarını üstleniyorum. Java, C#, PHP ve modern JavaScript framework'leri ile çalışıyorum.
+                    </p>
+                </div>
+            </div>
+            <div class="experience-item">
+                <div class="exp-year">2024 — 2026</div>
+                <div class="exp-content">
+                    <h3>Junior Developer</h3>
+                    <span class="exp-company">Freelance / Ankara</span>
+                    <p class="exp-desc">
+                        Kurumsal web uygulamaları geliştirdim. SQL ve MySQL veritabanı yönetimi, RESTful API tasarımı ve responsive web arayüzleri konularında deneyim kazandım.
+                    </p>
+                </div>
+            </div>
+            <div class="experience-item">
+                <div class="exp-year">2024 — 2026</div>
+                <div class="exp-content">
+                    <h3>Grafik Tasarımcı</h3>
+                    <span class="exp-company">Freelance / Ankara</span>
+                    <p class="exp-desc">
+                        Sosyal medya görselleri, marka kimlikleri ve web arayüz tasarımları hazırladım. Adobe Creative Suite ve UI/UX prensipleri üzerine yoğunlaştım.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kişisel -->
+    <section class="personal-section">
+        <div class="personal-content">
+            <h2>İş dışında <span>ben</span></h2>
+            <p>
+                Sabah erken kalkıp kahve demlemeyi severim. Kahvem elimdeyken gün doğumunu izlemek güne iyi başlamamı sağlar.
+            </p>
+            <p>
+                Hafta sonları analog fotoğraf makinemle dolaşırım. Dijitalin hızına karşı yavaşlığın değerini hatırlatır bana. Her kareyi düşünerek çekmek, tasarımdaki detaycılığımı besliyor.
+            </p>
+            <div class="interests-list">
+                <div class="interest-item">
+                    <div class="interest-icon">📷</div>
+                    <span class="interest-text">Analog Fotoğraf</span>
+                </div>
+                <div class="interest-item">
+                    <div class="interest-icon">🌱</div>
+                    <span class="interest-text">Bitki Bakımı</span>
+                </div>
+                <div class="interest-item">
+                    <div class="interest-icon">☕</div>
+                    <span class="interest-text">Kahve Demleme</span>
+                </div>
+                <div class="interest-item">
+                    <div class="interest-icon">🏺</div>
+                    <span class="interest-text">Seramik</span>
+                </div>
+            </div>
+        </div>
+        <div class="personal-visual">
+            <div class="visual-circle">
+                <div class="visual-inner">
+                    VB
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="quote-container">
+            <p class="rotating-quote active" id="quote1">"Yaratmak, ruhun nefes almasıdır"</p>
+            <p class="rotating-quote" id="quote2">"Tasarım, görünmeyeni görünür kılmaktır"</p>
+            <p class="rotating-quote" id="quote3">"Detaylar, mükemmelliğin mimarıdır"</p>
+            <p class="rotating-quote" id="quote4">"Kod şiir, tasarım duygudur"</p>
+        </div>
+        <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
+        <p class="footer-hearts">✦ ✧ ✦</p>
+    </footer>
+
+    <script>
+        // 1. Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 150);
+        });
+
+        // 2. Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☾';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☾' : '☀';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // 3. Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 4. Falling Petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = ['✦', '✧', '⋆', '★'][Math.floor(Math.random() * 4)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.color = ['var(--dusty-rose)', 'var(--lavender-deep)', 'var(--peach-deep)', 'var(--sage)'][Math.floor(Math.random() * 4)];
+            
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        setInterval(createPetal, 3000);
+
+        // 5. Rotating Quotes
+        const quotes = document.querySelectorAll('.rotating-quote');
+        let currentQuote = 0;
+
+        function rotateQuotes() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+
+        setInterval(rotateQuotes, 5000);
+
+        // 6. Visitor Counter (using localStorage)
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount');
+            if (!count) {
+                count = Math.floor(Math.random() * 1000) + 500;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitorCount').textContent = count;
+        }
+
+        updateVisitorCount();
+
+        // Scroll animasyonları için Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Gözlemlenecek elementler
+        const elementsToAnimate = [
+            '.story-image-wrap',
+            '.story-content h2',
+            '.story-content p',
+            '.story-quote',
+            '.section-header',
+            '.value-card',
+            '.experience-section',
+            '.experience-item',
+            '.personal-content h2',
+            '.personal-content p',
+            '.interest-item',
+            '.personal-visual',
+            'footer'
+        ];
+
+        elementsToAnimate.forEach(selector => {
+            document.querySelectorAll(selector).forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Navbar scroll efekti
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobil menü açıkken sayfa scroll'unu engelle
+        const menuToggle = document.getElementById('menu-toggle');
+        menuToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Menü linklerine tıklandığında menüyü kapat
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.checked = false;
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Organik blob hareketi mouse ile
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 15;
+                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Parallax efekti çiçekler için
+        document.addEventListener('mousemove', (e) => {
+            const flowers = document.querySelectorAll('.flower-decor');
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            flowers.forEach((flower, index) => {
+                const speed = (index + 1) * 0.5;
+                flower.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+
+    <script src="js/urunler.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof UrunlerApp !== 'undefined') {
+                UrunlerApp.temaYukle();
+                UrunlerApp.badgeYukle();
+            }
+        });
+    </script>
+</body>
+</html>

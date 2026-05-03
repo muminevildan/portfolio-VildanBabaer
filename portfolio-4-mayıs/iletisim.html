@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim — Vildan Babaer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFFCF8;
+            --soft-pink: #FFE4EC;
+            --dusty-rose: #f596b1;
+            --rose-deep: #D4849C;
+            --sage: #B8D4C0;
+            --sage-light: #D4E8D8;
+            --charcoal: #2C2C2C;
+            --warm-gray: #6B6B6B;
+            --light-gray: #E8E8E8;
+            --lavender: #e2c6ed;
+            --lavender-deep: #c09dd0;
+            --peach: #FFD4C4;
+            --peach-deep: #F5B8A0;
+            --coral: #FFB5A7;
+            --coral-soft: #FFD4CC;
+            --mint: #C4F0E0;
+            --mint-soft: #E0F5EE;
+            --champagne: #F5E6D3;
+            --gold: #E8D4A8;
+            --blush: #F8E0E0;
+            --sky-blue: #D4E8F5;
+            --butter: #FFF4D4;
+            --error: #E57373;
+            --error-light: #FFEBEE;
+            --success: #81C784;
+            --success-light: #E8F5E9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 50%, var(--cream) 100%);
+            background-attachment: fixed;
+            color: var(--charcoal);
+            line-height: 1.8;
+            font-weight: 300;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+        ::selection { background: var(--dusty-rose); color: white; }
+
+        /* Arka Plan Efektleri */
+        .organic-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float 15s infinite ease-in-out; }
+        .blob-1 { width: 500px; height: 500px; background: linear-gradient(135deg, var(--soft-pink), var(--lavender)); top: -150px; right: -150px; animation-delay: 0s; }
+        .blob-2 { width: 400px; height: 400px; background: linear-gradient(135deg, var(--sage), var(--mint)); bottom: 5%; left: -150px; animation-delay: 3s; }
+        .blob-3 { width: 350px; height: 350px; background: linear-gradient(135deg, var(--peach), var(--coral-soft)); top: 35%; right: 5%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            25% { transform: translate(30px, -30px) scale(1.1) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) scale(0.95) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) scale(1.05) rotate(3deg); }
+        }
+
+        .flower-decor { position: fixed; font-size: 2rem; opacity: 0.15; animation: rotate-flower 20s infinite linear; pointer-events: none; z-index: -1; }
+        .flower-1 { top: 15%; left: 5%; animation-delay: 0s; }
+        .flower-2 { top: 45%; right: 8%; animation-delay: -5s; font-size: 1.5rem; }
+        .flower-3 { bottom: 25%; left: 12%; animation-delay: -10s; font-size: 1.8rem; }
+
+        @keyframes rotate-flower { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .sparkle { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; opacity: 0; animation: sparkle 4s infinite; pointer-events: none; z-index: -1; }
+        .sparkle::before, .sparkle::after { content: ''; position: absolute; background: var(--gold); border-radius: 50%; }
+        .sparkle::before { width: 12px; height: 2px; top: 1px; left: -4px; }
+        .sparkle::after { width: 2px; height: 12px; top: -4px; left: 1px; }
+        .sparkle-1 { top: 20%; left: 15%; animation-delay: 0s; }
+        .sparkle-2 { top: 35%; right: 25%; animation-delay: 1s; }
+
+        @keyframes sparkle { 0%, 100% { opacity: 0; transform: scale(0); } 50% { opacity: 0.8; transform: scale(1); } }
+
+        /* Navigasyon */
+        nav { position: fixed; top: 0; width: 100%; padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(255, 252, 248, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid transparent; transition: all 0.4s ease; }
+        nav.scrolled { border-bottom-color: var(--soft-pink); padding: 1.2rem 5%; background: rgba(255, 252, 248, 0.95); }
+        
+        .logo { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 1.8rem; 
+            font-weight: 400; 
+            letter-spacing: 2px; 
+            color: var(--charcoal); 
+            text-decoration: none; 
+            position: relative;
+            z-index: 1001;
+        }
+        .logo::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep), var(--peach-deep)); transform: scaleX(0); transition: transform 0.4s ease; }
+        .logo:hover::after { transform: scaleX(1); }
+
+        #menu-toggle { display: none; }
+        .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 30px; height: 24px; cursor: pointer; z-index: 1001; position: relative; }
+        .hamburger span { display: block; width: 100%; height: 3px; background: var(--charcoal); border-radius: 3px; transition: all 0.3s ease; transform-origin: center; }
+
+        .nav-links { display: flex; gap: 3rem; list-style: none; transition: all 0.4s ease; }
+        .nav-links a { color: var(--warm-gray); text-decoration: none; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; position: relative; padding: 0.5rem 0; transition: color 0.3s ease; }
+        .nav-links a::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep)); transition: width 0.4s ease; }
+        .nav-links a:hover { color: var(--rose-deep); }
+        .nav-links a:hover::before { width: 100%; }
+        .nav-links a.active { color: var(--rose-deep); }
+        .nav-links a.active::before { width: 100%; }
+
+        /* İletişim Bölümü */
+        section { padding: 10rem 10% 6rem; max-width: 1400px; margin: 0 auto; position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .section-header { margin-bottom: 4rem; display: flex; align-items: baseline; gap: 2rem; }
+        .section-number { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--charcoal); position: relative; }
+        .section-title::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 80px; height: 3px; background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep), var(--peach-deep)); border-radius: 2px; }
+
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+        .contact-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; margin-bottom: 2rem; color: var(--charcoal); }
+        .contact-links { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
+        .contact-link { display: flex; align-items: center; gap: 1rem; color: var(--warm-gray); text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; padding: 0.8rem 1.5rem; border-radius: 50px; background: white; }
+        .contact-link:hover { color: var(--rose-deep); background: linear-gradient(135deg, var(--soft-pink), var(--lavender)); transform: translateX(10px); }
+        .social-row { display: flex; gap: 1rem; }
+        .social-link { width: 50px; height: 50px; border: 2px solid var(--light-gray); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--charcoal); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .social-link::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); opacity: 0; transition: opacity 0.4s ease; }
+        .social-link:hover { border-color: transparent; color: white; transform: translateY(-5px) rotate(5deg); box-shadow: 0 10px 25px rgba(232, 165, 184, 0.4); }
+        .social-link:hover::before { opacity: 1; }
+        .social-link span { position: relative; z-index: 1; }
+
+        /* ===== FORM STILLERİ ===== */
+        .contact-form { 
+            background: white; 
+            padding: 3rem; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .contact-form::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            height: 4px; 
+            background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep), var(--peach-deep)); 
+        }
+
+        /* Form Durum Mesajları */
+        .form-status {
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            gap: 0.8rem;
+            animation: slideDown 0.5s ease;
+            border-left: 4px solid;
+        }
+        
+        .form-status.show {
+            display: flex;
+        }
+        
+        .form-status.success {
+            background: var(--success-light);
+            border-left-color: var(--success);
+            color: #2E7D32;
+        }
+        
+        .form-status.error {
+            background: var(--error-light);
+            border-left-color: var(--error);
+            color: #C62828;
+        }
+        
+        .form-status .status-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Grubu */
+        .form-group { 
+            margin-bottom: 2rem; 
+            position: relative; 
+        }
+        
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select { 
+            width: 100%; 
+            padding: 1rem 0; 
+            border: none; 
+            border-bottom: 2px solid var(--light-gray); 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 1rem; 
+            color: var(--charcoal); 
+            background: transparent; 
+            transition: all 0.3s ease; 
+        }
+        
+        .form-group textarea { 
+            resize: vertical; 
+            min-height: 100px; 
+        }
+        
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6B6B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right center;
+            padding-right: 20px;
+        }
+        
+        .form-group select option {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .form-group label { 
+            position: absolute; 
+            left: 0; 
+            top: 1rem; 
+            color: var(--warm-gray); 
+            font-size: 0.9rem; 
+            pointer-events: none; 
+            transition: all 0.3s ease; 
+        }
+        
+        .form-group input:focus, 
+        .form-group textarea:focus,
+        .form-group select:focus { 
+            outline: none; 
+            border-bottom-color: var(--dusty-rose); 
+            border-bottom-width: 3px; 
+        }
+        
+        .form-group input:focus + label, 
+        .form-group textarea:focus + label,
+        .form-group select:focus + label,
+        .form-group input:not(:placeholder-shown) + label, 
+        .form-group textarea:not(:placeholder-shown) + label,
+        .form-group select:valid + label { 
+            top: -0.5rem; 
+            font-size: 0.75rem; 
+            color: var(--dusty-rose); 
+        }
+
+        /* Hata Durumu */
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+            border-bottom-color: var(--error);
+        }
+        
+        .form-group.error label {
+            color: var(--error);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .form-group.error .error-message {
+            display: flex;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Başarı Durumu */
+        .form-group.success input,
+        .form-group.success textarea,
+        .form-group.success select {
+            border-bottom-color: var(--success);
+        }
+
+        /* Zorunlu Alan İşareti */
+        .required-mark {
+            color: var(--dusty-rose);
+            margin-left: 2px;
+        }
+
+        .submit-btn { 
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); 
+            color: white; 
+            border: none; 
+            padding: 1.2rem 3rem; 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 0.9rem; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            border-radius: 50px; 
+            transition: all 0.4s ease; 
+            width: 100%; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .submit-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s ease; }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(232, 165, 184, 0.5); }
+        .submit-btn:hover::before { left: 100%; }
+        
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .submit-btn.loading {
+            color: transparent;
+        }
+        
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spinner 0.8s linear infinite;
+        }
+        
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer { text-align: center; padding: 2rem; background: linear-gradient(180deg, transparent, rgba(255, 228, 236, 0.5)); color: var(--warm-gray); font-size: 0.85rem; letter-spacing: 1px; margin-top: auto; }
+        .footer-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+        .footer-hearts { margin-top: 0.5rem; font-size: 1.2rem; animation: heartbeat 1.5s infinite; }
+
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
+            .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+            section { padding-top: 8rem; padding-bottom: 4rem; }
+            .section-title { font-size: 2.5rem; }
+            .contact-info h3 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: rgba(255, 252, 248, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                padding: 2rem;
+                transition: right 0.4s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                z-index: 999;
+            }
+            #menu-toggle:checked ~ .nav-links { right: 0; }
+            #menu-toggle:checked ~ .hamburger span:nth-child(1) { transform: translateY(10.5px) rotate(45deg); }
+            #menu-toggle:checked ~ .hamburger span:nth-child(2) { opacity: 0; }
+            #menu-toggle:checked ~ .hamburger span:nth-child(3) { transform: translateY(-10.5px) rotate(-45deg); }
+            #menu-toggle:checked ~ .menu-overlay { opacity: 1; visibility: visible; }
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.3);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.4s ease;
+                z-index: 998;
+            }
+            .nav-links a { font-size: 1.1rem; padding: 1rem; }
+            section { padding: 7rem 5% 4rem; }
+            .section-header { flex-direction: column; gap: 0.5rem; margin-bottom: 2.5rem; }
+            .section-title { font-size: 2.2rem; }
+            .section-title::after { width: 60px; height: 2px; }
+            .contact-info h3 { font-size: 1.6rem; margin-bottom: 1.5rem; }
+            .contact-links { gap: 1rem; margin-bottom: 2rem; }
+            .contact-link { font-size: 1rem; padding: 0.7rem 1.2rem; }
+            .social-link { width: 45px; height: 45px; font-size: 0.85rem; }
+            .contact-form { padding: 2rem; }
+            .form-group { margin-bottom: 1.5rem; }
+            .submit-btn { padding: 1rem 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 1.4rem; }
+            .section-title { font-size: 1.8rem; }
+            .contact-info h3 { font-size: 1.4rem; }
+            .contact-link { font-size: 0.9rem; padding: 0.6rem 1rem; }
+            .contact-form { padding: 1.5rem; border-radius: 15px; }
+            .form-group input, .form-group textarea, .form-group select { font-size: 0.95rem; }
+            .submit-btn { font-size: 0.85rem; padding: 1rem 2rem; }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            section { padding-top: 80px; padding-bottom: 40px; }
+            .contact-wrapper { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .nav-links { padding-top: 60px; justify-content: flex-start; }
+        }
+
+        /* Ek Özellikler */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; }
+        .loading-flower {
+            font-size: 3rem;
+            animation: spin-flower 2s infinite linear;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .loading-text {
+            margin-top: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--warm-gray);
+            letter-spacing: 2px;
+        }
+        @keyframes spin-flower {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            color: var(--charcoal);
+        }
+        .theme-toggle:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 8px 30px rgba(232, 165, 184, 0.4); }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(232, 165, 184, 0.4);
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(232, 165, 184, 0.6); }
+
+        .petal {
+            position: fixed;
+            top: -50px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+
+        .visitor-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--warm-gray);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .visitor-counter span {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
+        }
+
+        .quote-container {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .rotating-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+        }
+        .rotating-quote.active { opacity: 1; transform: translateY(0); }
+
+        [data-theme="dark"] {
+            --cream: #1a1a2e;
+            --soft-pink: #2d2d44;
+            --dusty-rose: #e8a4b8;
+            --rose-deep: #f0b8c8;
+            --sage: #4a5d5f;
+            --sage-light: #3d4f52;
+            --charcoal: #f5f0eb;
+            --warm-gray: #c8c0b8;
+            --light-gray: #4a4a6a;
+            --lavender: #d4b8e8;
+            --lavender-deep: #c8a8e0;
+            --peach: #f0c8b8;
+            --peach-deep: #e8b8a0;
+            --blush: #2a2a3e;
+            --error: #ef9a9a;
+            --error-light: #3e2723;
+            --success: #a5d6a7;
+            --success-light: #1b5e20;
+        }
+        [data-theme="dark"] .loading-screen { background: var(--cream); }
+        [data-theme="dark"] .visitor-counter { background: rgba(40, 40, 60, 0.9); border: 1px solid var(--light-gray); }
+        [data-theme="dark"] nav { background: rgba(26, 26, 46, 0.9); border-bottom-color: var(--light-gray); }
+        [data-theme="dark"] nav.scrolled { background: rgba(26, 26, 46, 0.95); }
+        [data-theme="dark"] .nav-links { background: rgba(26, 26, 46, 0.98); }
+        [data-theme="dark"] .contact-form { background: rgba(40, 40, 60, 0.9); border: 1px solid var(--light-gray); }
+        [data-theme="dark"] .contact-link { background: rgba(40, 40, 60, 0.9); }
+        [data-theme="dark"] .social-link { background: rgba(40, 40, 60, 0.9); color: var(--charcoal); }
+        [data-theme="dark"] footer { background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2)); }
+        [data-theme="dark"] .form-status.success { color: #a5d6a7; }
+        [data-theme="dark"] .form-status.error { color: #ef9a9a; }
+
+        @media (max-width: 968px) {
+            .theme-toggle { top: 80px; right: 20px; width: 45px; height: 45px; font-size: 1.3rem; display: flex !important; }
+            .visitor-counter { bottom: 20px; left: 20px; padding: 0.6rem 1rem; font-size: 0.7rem; }
+            .back-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+        }
+        @media (max-width: 480px) {
+            .theme-toggle { top: 70px; right: 15px; width: 40px; height: 40px; font-size: 1.2rem; }
+        }
+                /* Mesaj Kartları */
+        .message-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--dusty-rose);
+            transition: all 0.3s ease;
+            animation: slideUp 0.5s ease;
+        }
+        
+        .message-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .message-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        
+        .message-date {
+            font-size: 0.75rem;
+            color: var(--warm-gray);
+            background: var(--soft-pink);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+        }
+        
+        .message-subject {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--lavender), var(--soft-pink));
+            color: var(--charcoal);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .message-body {
+            color: var(--warm-gray);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+        
+        .message-contact {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-gray);
+            font-size: 0.85rem;
+            color: var(--warm-gray);
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--warm-gray);
+            background: white;
+            border-radius: 20px;
+        }
+        
+        .toggle-messages {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 50px;
+            color: var(--warm-gray);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-messages:hover {
+            border-color: var(--dusty-rose);
+            color: var(--rose-deep);
+        }
+        
+        [data-theme="dark"] .message-card,
+        [data-theme="dark"] .empty-state {
+            background: rgba(40, 40, 60, 0.9);
+            border: 1px solid var(--light-gray);
+        }
+        
+        [data-theme="dark"] .toggle-messages {
+            background: rgba(40, 40, 60, 0.9);
+        }
+    
+        .nav-icon-link {
+            display: flex; align-items: center; gap: 0.3rem; position: relative;
+        }
+        .nav-badge {
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep));
+            color: white; font-size: 0.65rem; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-weight: 600; display: none;
+            transition: transform 0.3s ease;
+        }
+</style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-flower">✦</div>
+        <div class="loading-text">Yükleniyor...</div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">☀</button>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" title="Yukarı Çık">↑</button>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        <span>✦</span> <span id="visitorCount">0</span> ziyaretçi
+    </div>
+
+    <div class="organic-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="flower-decor flower-2">❀</div>
+    <div class="flower-decor flower-1">✦</div>
+    <div class="flower-decor flower-3">★</div>
+    <div class="sparkle sparkle-1"></div>
+    <div class="sparkle sparkle-2"></div>
+
+    <!-- Navigasyon -->
+    <nav id="navbar">
+        <a href="index.html" class="logo">✦ V. Portfolyo</a>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="hamburger" aria-label="Menüyü Aç/Kapat">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <label for="menu-toggle" class="menu-overlay"></label>
+                <ul class="nav-links">
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="hakkimda.html">Hakkımda</a></li>
+            <li><a href="projeler.html">Projeler</a></li>
+            <li><a href="iletisim.html" class="active">İletişim</a></li>
+            <li><a href="mesajlar.html">Mesajlar</a></li>
+            <li><a href="urunler.html">Ürünler</a></li>
+            <li><a href="favoriler.html" class="nav-icon-link">♡ <span class="nav-badge" id="favoriBadge">0</span></a></li>
+            <li><a href="sepet.html" class="nav-icon-link">🛒 <span class="nav-badge" id="sepetBadge">0</span></a></li>
+        </ul>
+    </nav>
+
+    <section id="contact">
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h1 class="section-title">Birlikte Çalışalım</h1>
+        </div>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Yeni bir proje mi düşünüyorsunuz?</h3>
+                <p style="color: var(--warm-gray); margin-bottom: 2rem; line-height: 1.8;">
+                    Fikirlerinizi dinlemek ve onları gerçeğe dönüştürmek için sabırsızlanıyorum. 
+                    Bir kahve içmek veya çevrimiçi tanışmak için bana ulaşın.
+                </p>
+                
+                <div class="contact-links">
+                    <a href="mailto:muminevildanb@gmail.com" class="contact-link">
+                        <span>✉</span> muminevildanb@gmail.com
+                    </a>
+                    <a href="tel:+905551234567" class="contact-link">
+                        <span>☎</span> +90 555 123 4567
+                    </a>
+                    <a href="#" class="contact-link">
+                        <span>◍</span> Ankara, Türkiye
+                    </a>
+                </div>
+
+                <div class="social-row">
+                    <a href="#" class="social-link" title="Instagram"><span>İg</span></a>
+                    <a href="#" class="social-link" title="LinkedIn"><span>In</span></a>
+                    <a href="#" class="social-link" title="Twitter/X"><span>X</span></a>
+                </div>
+            </div>
+
+            <!-- ===== İLETİŞİM FORMU - EMAILJS ===== -->
+            <form class="contact-form" id="contactForm" novalidate>
+                
+                <!-- Genel Durum Mesajı -->
+                <div class="form-status" id="formStatus">
+                    <span class="status-icon" id="statusIcon"></span>
+                    <span id="statusText"></span>
+                </div>
+
+                <!-- Ad Soyad -->
+                <div class="form-group" id="groupName">
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="ad_soyad" 
+                        placeholder=" " 
+                        required
+                        minlength="2"
+                        maxlength="50"
+                    >
+                    <label for="name">Adınız Soyadınız<span class="required-mark">*</span></label>
+                    <div class="error-message" id="errorName">
+                        <span>⚠</span> Lütfen adınızı ve soyadınızı girin (en az 2 karakter).
+                    </div>
+                </div>
+
+                <!-- E-posta -->
+                <div class="form-group" id="groupEmail">
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder=" " 
+                        required
+                    >
+                    <label for="email">E-posta Adresiniz<span class="required-mark">*</span></label>
+                    <div class="error-message" id="errorEmail">
+                        <span>⚠</span> Lütfen geçerli bir e-posta adresi girin.
+                    </div>
+                </div>
+                
+                <!-- Konu Seçimi -->
+                <div class="form-group" id="groupSubject">
+                    <select id="subject" name="konu" required>
+                        <option value="" disabled selected></option>
+                        <option value="Yeni Proje Teklifi">Yeni Proje Teklifi</option>
+                        <option value="İş Birliği">İş Birliği</option>
+                        <option value="Danışmanlık">Danışmanlık</option>
+                        <option value="Diğer">Diğer</option>
+                    </select>
+                    <label for="subject">Konu Başlığı<span class="required-mark">*</span></label>
+                    <div class="error-message" id="errorSubject">
+                        <span>⚠</span> Lütfen bir konu seçin.
+                    </div>
+                </div>
+
+                <!-- Telefon (Opsiyonel) -->
+                <div class="form-group" id="groupPhone">
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="telefon" 
+                        placeholder=" " 
+                        pattern="[0-9]{11}"
+                        maxlength="11"
+                    >
+                    <label for="phone">Telefon Numaranız (Opsiyonel)</label>
+                    <div class="error-message" id="errorPhone">
+                        <span>⚠</span> 11 haneli telefon numarası girin.
+                    </div>
+                </div>
+
+                <!-- Mesaj -->
+                <div class="form-group" id="groupMessage">
+                    <textarea 
+                        id="message" 
+                        name="mesaj" 
+                        placeholder=" " 
+                        required
+                        minlength="10"
+                        maxlength="1000"
+                    ></textarea>
+                    <label for="message">Projenizden Bahsedin<span class="required-mark">*</span></label>
+                    <div class="error-message" id="errorMessage">
+                        <span>⚠</span> Lütfen mesajınızı girin (en az 10 karakter).
+                    </div>
+                </div>
+
+               <button type="submit" class="submit-btn" id="submitBtn">Gönder</button>
+
+              
+    
+            </form>
+                        </form>
+            
+            <!-- ===== GÖNDERİLEN MESAJLAR ===== -->
+            
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="quote-container">
+            <p class="rotating-quote active" id="quote1">"Yaratmak, ruhun nefes almasıdır"</p>
+            <p class="rotating-quote" id="quote2">"Tasarım, görünmeyeni görünür kılmaktır"</p>
+            <p class="rotating-quote" id="quote3">"Detaylar, mükemmelliğin mimarıdır"</p>
+            <p class="rotating-quote" id="quote4">"Kod şiir, tasarım duygudur"</p>
+        </div>
+        <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
+        <p class="footer-hearts">✦ ✧ ✦</p>
+    </footer>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+        // ===== EMAILJS AYARLARI =====
+        // BURAYI KENDİ BİLGİLERİNİZLE DEĞİŞTİRİN:
+        const EMAILJS_SERVICE_ID = 'service_xh4ohfq';      // EmailJS Service ID'niz
+        const EMAILJS_TEMPLATE_ID = 'template_kon4vvy';    // EmailJS Template ID'niz  
+        const EMAILJS_PUBLIC_KEY = 'eI2gcP_4zCzz_QCfB';  // EmailJS Public Key'iniz
+
+        // EmailJS'i başlat
+        (function() {
+            emailjs.init(EMAILJS_PUBLIC_KEY);
+        })();
+
+        // ===== FORM DOĞRULAMA + EMAILJS GÖNDERİMİ =====
+        
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusText = document.getElementById('statusText');
+
+        // Doğrulama kuralları
+        const validators = {
+            name: (value) => {
+                if (!value.trim()) return { valid: false, message: 'Ad soyad alanı boş bırakılamaz.' };
+                if (value.trim().length < 2) return { valid: false, message: 'Ad soyad en az 2 karakter olmalıdır.' };
+                if (!/^[a-zA-ZğüşıöçĞÜŞİÖÇ\s]+$/.test(value)) return { valid: false, message: 'Ad soyad sadece harf içermelidir.' };
+                return { valid: true };
+            },
+            email: (value) => {
+                if (!value.trim()) return { valid: false, message: 'E-posta alanı boş bırakılamaz.' };
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) return { valid: false, message: 'Geçerli bir e-posta adresi girin.' };
+                return { valid: true };
+            },
+            subject: (value) => {
+                if (!value) return { valid: false, message: 'Lütfen bir konu seçin.' };
+                return { valid: true };
+            },
+            phone: (value) => {
+                if (!value.trim()) return { valid: true }; // Opsiyonel
+                const phoneRegex = /^[0-9]{11}$/;
+                if (!phoneRegex.test(value.replace(/\s/g, ''))) return { valid: false, message: 'Telefon numarası 11 haneli olmalıdır.' };
+                return { valid: true };
+            },
+            message: (value) => {
+                if (!value.trim()) return { valid: false, message: 'Mesaj alanı boş bırakılamaz.' };
+                if (value.trim().length < 10) return { valid: false, message: 'Mesaj en az 10 karakter olmalıdır.' };
+                if (value.trim().length > 1000) return { valid: false, message: 'Mesaj en fazla 1000 karakter olabilir.' };
+                return { valid: true };
+            }
+        };
+
+        // Alan doğrulama fonksiyonu
+        function validateField(fieldName, value) {
+            const group = document.getElementById(`group${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`);
+            const result = validators[fieldName](value);
+            
+            if (!result.valid) {
+                group.classList.add('error');
+                group.classList.remove('success');
+                return false;
+            } else {
+                group.classList.remove('error');
+                group.classList.add('success');
+                return true;
+            }
+        }
+
+        // Gerçek zamanlı doğrulama (blur event)
+        ['name', 'email', 'subject', 'phone', 'message'].forEach(fieldName => {
+            const field = document.getElementById(fieldName);
+            field.addEventListener('blur', () => {
+                validateField(fieldName, field.value);
+            });
+            
+            // Kullanıcı yazarken hata durumunu temizle
+            field.addEventListener('input', () => {
+                const group = document.getElementById(`group${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`);
+                if (group.classList.contains('error')) {
+                    validateField(fieldName, field.value);
+                }
+            });
+        });
+
+        // Form gönderimi - EmailJS ile
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Tüm alanları doğrula
+            let isValid = true;
+            
+            ['name', 'email', 'subject', 'phone', 'message'].forEach(fieldName => {
+                const field = document.getElementById(fieldName);
+                if (!validateField(fieldName, field.value)) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showStatus('error', 'Lütfen formdaki hataları düzeltin ve tekrar deneyin.');
+                const firstError = document.querySelector('.form-group.error input, .form-group.error textarea, .form-group.error select');
+                if (firstError) firstError.focus();
+                return;
+            }
+
+            // Doğrulama başarılı - Yükleme durumu
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+            
+            showStatus('success', 'Mesajınız gönderiliyor... Lütfen bekleyin.');
+
+            // EmailJS parametreleri
+            const templateParams = {
+                ad_soyad: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                konu: document.getElementById('subject').value,
+                telefon: document.getElementById('phone').value || 'Belirtilmedi',
+                mesaj: document.getElementById('message').value
+            };
+
+            // EmailJS ile gönder
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(function(response) {
+                    console.log('Başarılı:', response.status, response.text);
+                    // ===== LOCALSTORAGE KAYIT (BURAYA EKLE) =====
+                    const formData = {
+                        id: Date.now(),
+                        ad_soyad: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        konu: document.getElementById('subject').value,
+                        telefon: document.getElementById('phone').value || 'Belirtilmedi',
+                        mesaj: document.getElementById('message').value,
+                        tarih: new Date().toLocaleString('tr-TR', {
+                            day: '2-digit', month: 'long', year: 'numeric',
+                            hour: '2-digit', minute: '2-digit'
+                        })
+                    };
+                    
+                    let messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+                    messages.unshift(formData);
+                    localStorage.setItem('contactMessages', JSON.stringify(messages));
+                    // =============================================
+                    
+                    // Başarılı mesajı göster
+                    showStatus('success', '✓ Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağım.');
+                    
+                    // Formu temizle
+                    contactForm.reset();
+                    document.querySelectorAll('.form-group').forEach(g => {
+                        g.classList.remove('success', 'error');
+                    });
+                    
+                    // Butonu normale döndür
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                    
+                    // 5 saniye sonra durum mesajını gizle
+                    setTimeout(() => {
+                        hideStatus();
+                    }, 5000);
+                    
+                }, function(error) {
+                    console.log('Hata:', error);
+                    
+                    // Hata mesajı göster
+                    showStatus('error', '✕ Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin.');
+                    
+                    // Butonu normale döndür
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                });
+        });
+
+        function showStatus(type, message) {
+            formStatus.className = 'form-status show ' + type;
+            statusIcon.textContent = type === 'success' ? '✓' : '✕';
+            statusText.textContent = message;
+            if (type === 'success') {
+                formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function hideStatus() {
+            formStatus.classList.remove('show');
+        }
+
+        // ===== DİĞER ÖZELLİKLER =====
+
+        // 1. Loading Screen - 1.5 saniye
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 150);
+        });
+
+        // 2. Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☾';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☾' : '☀';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // 3. Back to Top
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 4. Falling Petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = ['✦', '✧', '⋆', '★'][Math.floor(Math.random() * 4)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            petal.style.color = ['var(--dusty-rose)', 'var(--lavender-deep)', 'var(--peach-deep)', 'var(--sage)'][Math.floor(Math.random() * 4)];
+            
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        setInterval(createPetal, 3000);
+
+        // 5. Visitor Counter
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount');
+            if (!count) {
+                count = Math.floor(Math.random() * 1000) + 500;
+            } else {
+                count = parseInt(count) + 1;
+            }
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitorCount').textContent = count;
+        }
+
+        updateVisitorCount();
+
+        // 6. Rotating Quotes
+        const quotes = document.querySelectorAll('.rotating-quote');
+        let currentQuote = 0;
+
+        function rotateQuotes() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+
+        setInterval(rotateQuotes, 5000);
+
+        // 7. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobil Menü
+        const menuToggle = document.getElementById('menu-toggle');
+        if (menuToggle) {
+            menuToggle.addEventListener('change', function() {
+                document.body.style.overflow = this.checked ? 'hidden' : '';
+            });
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.checked = false;
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
+        // Mouse Parallax
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 15;
+                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+                // ===== MESAJLARI GÖSTER/GİZLE =====
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function loadMessages() {
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const container = document.getElementById('sentMessages');
+            const list = document.getElementById('messageList');
+            const count = document.getElementById('msgCount');
+            
+            count.textContent = messages.length;
+            
+            if (messages.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5;">✉</div>
+                        <p>Henüz gönderilmiş mesaj yok.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            list.innerHTML = messages.map(msg => `
+                <div class="message-card">
+                    <div class="message-header">
+                        <span class="message-name">${escapeHtml(msg.ad_soyad)}</span>
+                        <span class="message-date">${msg.tarih}</span>
+                    </div>
+                    <span class="message-subject">${escapeHtml(msg.konu)}</span>
+                    <p class="message-body">${escapeHtml(msg.mesaj)}</p>
+                    <div class="message-contact">
+                        <span>✉ ${escapeHtml(msg.email)}</span>
+                        ${msg.telefon !== 'Belirtilmedi' ? `<span>☎ ${escapeHtml(msg.telefon)}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Sayfa yüklenince mesajları yükle (ama gizli kalır)
+        loadMessages();
+                function toggleMessageView() {
+            const form = document.getElementById('contactForm');
+            const messages = document.getElementById('sentMessages');
+            const btn = document.getElementById('toggleMessages');
+            
+            if (messages.style.display === 'none') {
+                form.style.display = 'none';
+                messages.style.display = 'block';
+                btn.innerHTML = '<span>✎</span> Yeni Mesaj Yaz';
+                loadMessages(); // Yeniden yükle
+                messages.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                messages.style.display = 'none';
+                form.style.display = 'block';
+                btn.innerHTML = '<span>✉</span> Gönderilen Mesajlarımı Gör';
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+
+    <script src="js/urunler.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof UrunlerApp !== 'undefined') {
+                UrunlerApp.temaYukle();
+                UrunlerApp.badgeYukle();
+            }
+        });
+    </script>
+</body>
+</html>
