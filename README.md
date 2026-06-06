@@ -1,23 +1,35 @@
-# Kişisel Portfolyo
+# Vildan Babaer — Kişisel Portfolyo Projesi
 
-Bu repository, geliştirdiğim yazılım projelerini ve çalışmalarımı bir arada gösterdiğim kişisel portfolyomu içerir. Amaç, farklı alanlarda yaptığım projeleri tek bir yerde toplamak ve incelemek isteyenler için düzenli bir yapı sunmaktır.
+Bu proje, web geliştirme teknolojileri kullanılarak oluşturulmuş, kullanıcı etkileşimli ve dinamik bir kişisel portfolyo sitesidir. Proje kapsamında veritabanı yönetimi, dinamik veri çekme (JSON) ve kullanıcı deneyimini iyileştiren modern arayüz tasarımı üzerine çalışmalar yapılmıştır.
 
-## İçerik
+## 🚀 Proje Hakkında
+Bu site, projelerimi sergilemek, gelen mesajları yönetmek ve ziyaretçilerle etkileşim kurmak amacıyla geliştirilmiştir. Modern tasarımı, kullanıcı dostu arayüzü ve arkadaki güçlü PHP/MySQL yapısıyla dinamik bir deneyim sunar.
 
-Portfolyo da yer alan projeler ağırlıklı olarak:
+## 🛠 Kullanılan Teknolojiler
+- **Backend:** PHP, MySQL (PDO)
+- **Frontend:** HTML5, CSS3 (Modern Flexbox/Grid yapısı), JavaScript (Vanilla JS)
+- **Veri Yönetimi:** JSON (Proje listeleri için), MySQL (Kullanıcı kayıt/giriş için)
 
-* Deneysel projeler
-* Öğrenme amaçlı geliştirilmiş uygulamalar
-* Farklı yazılım konularını denemek için oluşturulmuş küçük projeler
+## 📋 Özellikler
+- **Kullanıcı Sistemi:** Güvenli şifreleme (`password_hash`) ile kullanıcı kayıt ve giriş işlemleri.
+- **Dinamik İçerik:** Projeler, JSON dosyasından çekilerek kart yapısında listelenir.
+- **UX Özellikleri:** Kategori tabanlı filtreleme, sayfa içi animasyonlar ve modern bir kullanıcı arayüzü.
+- **Mesaj Yönetimi:** `localStorage` kullanılarak kullanıcı mesajlarının anlık görüntülenmesi ve yönetilmesi.
+- **Responsive Tasarım:** Mobil cihazlarla %100 uyumlu modern görünüm.
 
-Her proje kendi klasörü içinde yer almakta ve gerekli açıklamalar ilgili proje dosyalarında bulunmaktadır.
+## 📂 Proje Yapısı
+- `baglanti.php`: Veritabanı bağlantı yönetimi.
+- `index.php`: Ana sayfa ve genel arayüz.
+- `giris_kayit.php`: Kullanıcı kimlik doğrulama işlemleri.
+- `projeler.php`: Projelerin dinamik olarak listelendiği sayfa.
+- `js/urunler.js`: Proje filtreleme ve veri çekme mantığı.
 
-## Amaç
+## ⚙️ Kurulum
+1. Bu projeyi bilgisayarınıza indirin veya klonlayın.
+2. `XAMPP` veya benzeri bir yerel sunucu ortamını başlatın.
+3. `portfolyo` adında bir veritabanı oluşturun ve ilgili tabloları içe aktarın.
+4. `baglanti.php` dosyasındaki veritabanı bilgilerinizi (kullanıcı adı/şifre) kendi sisteminize göre güncelleyin.
+5. Projeyi tarayıcınızda çalıştırın.
 
-Bu portfolyonun amacı geliştirdiğim projeleri düzenli bir şekilde sergilemek ve zaman içinde yaptığım çalışmaların gelişimini göstermektir.
-
-## Kullanım
-
-Repository içerisindeki klasörleri inceleyerek projelerin kaynak kodlarına ve açıklamalarına ulaşabilirsiniz.
-Daha fazla bilgi için iletişime geçebilirsiniz
-
+---
+*Geliştirici: Mümüne Vildan Babaer*
