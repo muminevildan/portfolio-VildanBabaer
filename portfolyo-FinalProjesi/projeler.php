@@ -1,0 +1,757 @@
+<?php
+// 1. Önce oturum başlar
+if (session_status() == PHP_SESSION_NONE) session_start();
+
+// 2. Sonra veritabanı bağlantısı gelir
+require 'baglanti.php'; 
+?>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Projeler — Vildan Babaer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFFCF8; --soft-pink: #FFE4EC; --dusty-rose: #f596b1; --rose-deep: #D4849C;
+            --sage: #B8D4C0; --sage-light: #D4E8D8; --charcoal: #2C2C2C; --warm-gray: #6B6B6B;
+            --light-gray: #E8E8E8; --lavender: #e2c6ed; --lavender-deep: #c09dd0;
+            --peach: #FFD4C4; --peach-deep: #F5B8A0; --coral: #FFB5A7; --coral-soft: #FFD4CC;
+            --mint: #C4F0E0; --mint-soft: #E0F5EE; --champagne: #F5E6D3; --gold: #E8D4A8;
+            --blush: #F8E0E0; --sky-blue: #D4E8F5; --butter: #FFF4D4;
+        }
+        [data-theme="dark"] {
+            --cream: #1a1a2e; --soft-pink: #2d2d44; --dusty-rose: #e8a4b8; --rose-deep: #f0b8c8;
+            --sage: #4a5d5f; --sage-light: #3d4f52; --charcoal: #f5f0eb; --warm-gray: #c8c0b8;
+            --light-gray: #4a4a6a; --lavender: #d4b8e8; --lavender-deep: #c8a8e0;
+            --peach: #f0c8b8; --peach-deep: #e8b8a0; --blush: #2a2a3e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth;overflow-x: hidden; /* Yatay kaymayı kesin olarak engeller */
+         width: 100%;  }
+        body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 50%, var(--cream) 100%); background-attachment: fixed; color: var(--charcoal); line-height: 1.8; font-weight: 300; overflow-x: hidden; overflow-x: hidden; 
+        width: 100%; 
+        position: relative; }
+        img, video { max-width: 100%; height: auto; display: block; }
+        ::selection { background: var(--dusty-rose); color: white; }
+
+        .organic-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float 15s infinite ease-in-out; }
+        .blob-1 { width: 500px; height: 500px; background: linear-gradient(135deg, var(--soft-pink), var(--lavender)); top: -150px; right: -150px; animation-delay: 0s; }
+        .blob-2 { width: 400px; height: 400px; background: linear-gradient(135deg, var(--sage), var(--mint)); bottom: 5%; left: -150px; animation-delay: 3s; }
+        .blob-3 { width: 350px; height: 350px; background: linear-gradient(135deg, var(--peach), var(--coral-soft)); top: 35%; right: 5%; animation-delay: 6s; }
+        @keyframes float { 0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); } 25% { transform: translate(30px,-30px) scale(1.1) rotate(5deg); } 50% { transform: translate(-20px,20px) scale(0.95) rotate(-5deg); } 75% { transform: translate(20px,10px) scale(1.05) rotate(3deg); } }
+
+        .flower-decor { position: fixed; font-size: 2rem; opacity: 0.15; animation: rotate-flower 20s infinite linear; pointer-events: none; z-index: -1; }
+        .flower-1 { top: 15%; left: 5%; } .flower-2 { top: 45%; right: 8%; animation-delay: -5s; font-size: 1.5rem; } .flower-3 { bottom: 25%; left: 12%; animation-delay: -10s; font-size: 1.8rem; }
+        @keyframes rotate-flower { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Theme Toggle */
+        .theme-toggle { position: fixed; top: 90px; left: 30px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--soft-pink), var(--lavender)); border: none; cursor: pointer; z-index: 900; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.4s ease; color: var(--charcoal); }
+        .theme-toggle:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 8px 30px rgba(232,165,184,0.4); }
+
+        /* Back to Top */
+        .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); border: none; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s ease; box-shadow: 0 5px 20px rgba(232,165,184,0.4); }
+        .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(232,165,184,0.6); }
+
+        /* Visitor Counter */
+        .visitor-counter { position: fixed; bottom: 30px; left: 30px; background: rgba(255,255,255,0.9); padding: 0.8rem 1.2rem; border-radius: 50px; font-size: 0.75rem; letter-spacing: 1px; color: var(--warm-gray); backdrop-filter: blur(10px); box-shadow: 0 5px 20px rgba(0,0,0,0.1); z-index: 999; display: flex; align-items: center; gap: 0.5rem; }
+        .visitor-counter span { background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 500; }
+        [data-theme="dark"] .visitor-counter { background: rgba(40,40,60,0.9); border: 1px solid var(--light-gray); }
+
+        .petal { position: fixed; top: -50px; pointer-events: none; z-index: -1; opacity: 0.6; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+
+        /* =====================
+           NAVBAR — index.php ile tam aynı yapı
+           ===================== */
+        nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.2rem 6%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(255,252,248,0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid transparent; transition: all 0.4s ease; }
+        nav.scrolled { border-bottom-color: var(--soft-pink); padding: 0.8rem 6%; background: rgba(255,252,248,0.95); box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        [data-theme="dark"] nav { background: rgba(26,26,46,0.9); }
+        [data-theme="dark"] nav.scrolled { background: rgba(26,26,46,0.95); border-bottom-color: var(--light-gray); }
+
+        .logo { display: flex; align-items: center; text-decoration: none; position: relative; z-index: 1002; flex-shrink: 0; }
+
+        .nav-right-cluster { display: flex; align-items: center; gap: 0; }
+
+        .nav-links { display: flex; gap: 0; list-style: none; align-items: center; margin: 0; padding: 0; }
+        .nav-links.mobile-only { display: none; }
+
+        .welcome-msg { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--dusty-rose); font-size: 1.1rem; letter-spacing: 0.5px; white-space: nowrap; padding: 0.5rem 1rem; }
+
+        .nav-links a { color: var(--warm-gray); text-decoration: none; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; position: relative; padding: 0.5rem 1rem; transition: all 0.3s ease; white-space: nowrap; font-weight: 500; }
+        .nav-links a::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--dusty-rose), var(--lavender-deep)); transition: width 0.4s ease; }
+        .nav-links a:hover { color: var(--rose-deep); }
+        .nav-links a:hover::before { width: 100%; }
+        .nav-links a.active { color: var(--rose-deep); }
+        .nav-links a.active::before { width: 100%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 0; flex-shrink: 0; z-index: 1002; }
+
+        .nav-icon-link { display: flex; align-items: center; justify-content: center; font-size: 1.2rem; position: relative; width: 40px; height: 40px; border-radius: 12px; background: transparent; color: var(--warm-gray); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); text-decoration: none; margin: 0 0.2rem; }
+        .nav-icon-link svg { width: 22px; height: 22px; stroke-width: 1.5; fill: none; stroke: currentColor; }
+        .nav-icon-link:hover { background: var(--soft-pink); color: var(--rose-deep); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(232,165,184,0.2); }
+        [data-theme="dark"] .nav-icon-link { color: var(--light-gray); }
+        [data-theme="dark"] .nav-icon-link:hover { background: var(--lavender-deep); color: white; }
+
+        .nav-badge { position: absolute; top: -5px; right: -5px; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); color: white; font-size: 0.65rem; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .nav-auth-btn { padding: 0.6rem 1.4rem; border-radius: 50px; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; transition: all 0.3s ease; font-weight: 600; white-space: nowrap; margin-left: 0.5rem; }
+        .btn-signup { background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); color: white; border: none; }
+        .btn-signup:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(232,165,184,0.4); }
+
+        /* Mobil Hamburger */
+        #menu-toggle { display: none; }
+        .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 30px; height: 22px; cursor: pointer; z-index: 1003; position: relative; margin-left: 1rem; }
+        .hamburger span { display: block; width: 100%; height: 2px; background: var(--charcoal); border-radius: 2px; transition: all 0.3s ease; transform-origin: center; }
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 1000; }
+        #menu-toggle:checked ~ .menu-overlay { opacity: 1; visibility: visible; }
+
+        /* Çarpı butonu */
+        .close-menu { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.8rem; color: var(--charcoal); cursor: pointer; transition: all 0.3s ease; line-height: 1; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; }
+        .close-menu:hover { color: var(--rose-deep); background: var(--soft-pink); transform: rotate(90deg); }
+        [data-theme="dark"] .close-menu { color: var(--warm-gray); }
+        [data-theme="dark"] .close-menu:hover { color: white; background: var(--light-gray); }
+
+        /* Page Hero */
+        .page-hero { min-height: 50vh; display: flex; align-items: center; justify-content: center; padding: 10rem 10% 4rem; text-align: center; position: relative; }
+        .page-greeting { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; display: block; letter-spacing: 2px; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards; }
+        .page-title { font-family: 'Cormorant Garamond', serif; font-size: 4rem; font-weight: 300; color: var(--charcoal); margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); animation: fadeInUp 0.8s ease 0.2s forwards; }
+        .page-title span { font-style: italic; background: linear-gradient(135deg, var(--dusty-rose), var(--peach-deep), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .page-subtitle { font-size: 1.1rem; color: var(--warm-gray); max-width: 600px; margin: 0 auto; line-height: 2; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease 0.4s forwards; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Filter */
+        .filter-section { padding: 2rem 10%; text-align: center; }
+        .filter-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .filter-buttons.visible { opacity: 1; transform: translateY(0); }
+        .filter-btn { padding: 0.8rem 2rem; background: white; border: 2px solid var(--light-gray); border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: var(--warm-gray); cursor: pointer; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .filter-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); transition: left 0.4s ease; z-index: -1; }
+        .filter-btn:hover, .filter-btn.active { color: white; border-color: transparent; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(232,165,184,0.3); }
+        .filter-btn:hover::before, .filter-btn.active::before { left: 0; }
+        [data-theme="dark"] .filter-btn { background: rgba(40,40,60,0.9); border-color: var(--light-gray); color: var(--warm-gray); }
+
+        /* Projects */
+        .projects-section { padding: 4rem 10%; max-width: 1600px; margin: 0 auto; width: 100%; }
+        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; width: 100%; }
+        .project-card { background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: all 0.5s cubic-bezier(0.4,0,0.2,1); opacity: 0; transform: translateY(50px) scale(0.95); display: flex; flex-direction: column; }
+        .project-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+        .project-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.15); }
+        [data-theme="dark"] .project-card { background: rgba(40,40,60,0.9); border: 1px solid var(--light-gray); }
+
+        .video-container { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; cursor: pointer; background: linear-gradient(135deg, var(--charcoal), #3d3d3d); }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; transition: all 0.5s ease; }
+        .project-card:hover .video-container video { transform: scale(1.05); }
+        .video-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(44,44,44,0.8) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; opacity: 0; transition: all 0.4s ease; }
+        .project-card:hover .video-overlay { opacity: 1; }
+        .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); width: 70px; height: 70px; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.68,-0.55,0.265,1.55); box-shadow: 0 10px 30px rgba(232,165,184,0.5); }
+        .play-button::before { content: '▶'; color: white; font-size: 1.5rem; margin-left: 5px; }
+        .project-card:hover .play-button { transform: translate(-50%,-50%) scale(1); }
+        .video-badge { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.9); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; color: var(--charcoal); backdrop-filter: blur(10px); transform: translateY(-20px); opacity: 0; transition: all 0.4s ease; }
+        .project-card:hover .video-badge { transform: translateY(0); opacity: 1; }
+
+        .web-preview { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: linear-gradient(135deg, var(--soft-pink), var(--lavender)); }
+        .web-preview img { width: 100%; height: 100%; object-fit: cover; transition: all 0.5s ease; }
+        .project-card:hover .web-preview img { transform: scale(1.05); }
+        .browser-mockup { position: absolute; top: 0; left: 0; right: 0; height: 30px; background: linear-gradient(180deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; gap: 0.5rem; padding: 0 1rem; z-index: 2; }
+        .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .browser-dot:nth-child(1) { background: #ff5f56; } .browser-dot:nth-child(2) { background: #ffbd2e; } .browser-dot:nth-child(3) { background: #27c93f; }
+
+        .project-info { padding: 1.8rem; flex: 1; display: flex; flex-direction: column; }
+        .project-category { display: inline-block; padding: 0.4rem 1rem; background: linear-gradient(135deg, var(--soft-pink), var(--lavender)); border-radius: 50px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; color: var(--charcoal); margin-bottom: 0.8rem; transition: all 0.3s ease; align-self: flex-start; }
+        .project-card:hover .project-category { background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); color: white; }
+        .project-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: var(--charcoal); margin-bottom: 0.5rem; transition: all 0.3s ease; line-height: 1.3; }
+        .project-card:hover .project-title { background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .project-desc { color: var(--warm-gray); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.2rem; flex: 1; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
+        .tech-tag { padding: 0.3rem 0.8rem; background: var(--cream); border: 1px solid var(--light-gray); border-radius: 20px; font-size: 0.75rem; color: var(--warm-gray); transition: all 0.3s ease; }
+        .project-card:hover .tech-tag { border-color: var(--dusty-rose); color: var(--dusty-rose); transform: translateY(-2px); }
+
+        /* Video Modal */
+        .video-modal { position: fixed; inset: 0; background: rgba(44,44,44,0.95); backdrop-filter: blur(20px); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.5s ease; padding: 2rem; }
+        .video-modal.active { opacity: 1; visibility: visible; }
+        .modal-content { width: 100%; max-width: 1100px; position: relative; transform: scale(0.8); transition: all 0.5s cubic-bezier(0.68,-0.55,0.265,1.55); }
+        .video-modal.active .modal-content { transform: scale(1); }
+        .modal-video { width: 100%; aspect-ratio: 16/9; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .modal-video video { width: 100%; height: 100%; object-fit: contain; background: #000; }
+        .modal-close { position: absolute; top: -60px; right: 0; width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 1.5rem; color: var(--charcoal); z-index: 10; }
+        .modal-close:hover { transform: rotate(90deg) scale(1.1); background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); color: white; }
+        .modal-info { margin-top: 1.5rem; color: white; text-align: center; }
+        .modal-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .modal-info p { color: rgba(255,255,255,0.7); font-size: 1rem; }
+
+        /* Stats */
+        .stats-section { background: linear-gradient(135deg, var(--soft-pink) 0%, var(--lavender) 50%, var(--peach) 100%); margin: 4rem -10%; padding: 4rem 10%; width: calc(100% + 20%); position: relative; overflow: hidden; }
+        .stats-section::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%); animation: shimmer 10s infinite linear; }
+        @keyframes shimmer { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        .stat-item { text-align: center; padding: 2rem; background: rgba(255,255,255,0.9); border-radius: 20px; backdrop-filter: blur(10px); transition: all 0.4s ease; opacity: 0; transform: translateY(30px); }
+        .stat-item.visible { opacity: 1; transform: translateY(0); }
+        .stat-item:nth-child(1) { transition-delay: 0.1s; } .stat-item:nth-child(2) { transition-delay: 0.2s; } .stat-item:nth-child(3) { transition-delay: 0.3s; } .stat-item:nth-child(4) { transition-delay: 0.4s; }
+        .stat-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        [data-theme="dark"] .stat-item { background: rgba(40,40,60,0.9); border: 1px solid var(--light-gray); }
+        .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; margin-bottom: 0.5rem; }
+        .stat-label { font-size: 0.9rem; color: var(--warm-gray); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* CTA */
+        .cta-section { text-align: center; padding: 6rem 10%; background: linear-gradient(135deg, var(--charcoal) 0%, #3d3d3d 100%); margin: 0 -10%; width: calc(100% + 20%); position: relative; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .cta-section.visible { opacity: 1; transform: translateY(0); }
+        .cta-section::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(232,165,184,0.1) 0%, transparent 70%); }
+        .cta-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+        .cta-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: white; margin-bottom: 1.5rem; opacity: 0; transform: translateY(20px); transition: all 0.6s ease 0.2s; }
+        .cta-section.visible h2 { opacity: 1; transform: translateY(0); }
+        .cta-section h2 span { font-style: italic; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .cta-section p { color: rgba(255,255,255,0.7); margin-bottom: 2.5rem; font-size: 1.1rem; line-height: 1.8; opacity: 0; transform: translateY(20px); transition: all 0.6s ease 0.3s; }
+        .cta-section.visible p { opacity: 1; transform: translateY(0); }
+        .cta-button { display: inline-flex; align-items: center; gap: 1rem; padding: 1.2rem 3rem; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-radius: 50px; transition: all 0.4s ease; box-shadow: 0 10px 30px rgba(232,165,184,0.4); opacity: 0; transform: translateY(20px); }
+        .cta-section.visible .cta-button { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        .cta-button::after { content: '→'; transition: transform 0.3s ease; }
+        .cta-button:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(232,165,184,0.5); }
+        .cta-button:hover::after { transform: translateX(5px); }
+
+        /* Footer */
+        footer { text-align: center; padding: 4rem 2rem; background: linear-gradient(180deg, transparent, rgba(255,228,236,0.5)); color: var(--warm-gray); font-size: 0.85rem; letter-spacing: 1px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        footer.visible { opacity: 1; transform: translateY(0); }
+        [data-theme="dark"] footer { background: linear-gradient(180deg, transparent, rgba(240,184,200,0.9)); border-top: 1px solid var(--rose-deep); }
+        .footer-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+        .footer-hearts { margin-top: 1rem; font-size: 1.2rem; animation: heartbeat 1.5s infinite; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .quote-container { min-height: 60px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .rotating-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; position: absolute; width: 100%; text-align: center; }
+        .rotating-quote.active { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 1150px) {
+            nav { padding: 1.2rem 5%; }
+            .nav-right-cluster { display: none; }
+            .hamburger { display: flex; z-index: 1001; margin-left: auto; }
+            .nav-links.mobile-only { position: fixed; top: 0; right: -100%; width: 80%; max-width: 320px; height: 100vh; background: var(--cream); flex-direction: column; justify-content: flex-start; align-items: center; gap: 0.5rem; padding: 5rem 1.5rem 2rem; transition: right 0.4s ease; box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 1001; display: flex; overflow-y: auto; }
+            #menu-toggle:checked ~ .nav-links.mobile-only { right: 0; }
+            [data-theme="dark"] .nav-links.mobile-only { background: #1a1a2e; }
+            #menu-toggle:checked ~ .hamburger span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+            #menu-toggle:checked ~ .hamburger span:nth-child(2) { opacity: 0; }
+            #menu-toggle:checked ~ .hamburger span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+            .nav-links a { font-size: 1rem; padding: 0.6rem 1rem; }
+        }
+        @media (max-width: 1024px) { .projects-grid { grid-template-columns: repeat(2,1fr); gap: 2rem; } }
+        @media (max-width: 968px) {
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            .page-title { font-size: 3rem; }
+            .theme-toggle { top: 75px; left: 15px; width: 40px; height: 40px; font-size: 1.2rem; }
+            .visitor-counter { bottom: 20px; left: 20px; padding: 0.6rem 1rem; font-size: 0.7rem; }
+            .back-to-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+        }
+        @media (max-width: 768px) {
+            .page-hero { padding: 8rem 5% 3rem; min-height: auto; }
+            .page-title { font-size: 2.5rem; }
+            .filter-section { padding: 1.5rem 5%; }
+            .filter-btn { padding: 0.6rem 1.5rem; font-size: 0.8rem; }
+            .projects-section { padding: 2rem 5%; }
+            .projects-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .stats-section { margin: 3rem -5%; padding: 3rem 5%; width: calc(100% + 10%); }
+            .stats-grid { grid-template-columns: repeat(2,1fr); gap: 1rem; }
+            .cta-section { padding: 4rem 5%; margin: 0 -5%; width: calc(100% + 10%); }
+            .cta-section h2 { font-size: 2.2rem; }
+        }
+        @media (max-width: 480px) {
+            .page-title { font-size: 2rem; }
+            .filter-buttons { gap: 0.5rem; }
+            .filter-btn { padding: 0.5rem 1.2rem; font-size: 0.75rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .theme-toggle { top: 70px; left: 15px; width: 40px; height: 40px; font-size: 1.2rem; }
+        }
+    </style>
+    <base target="_blank">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" title="Tema Değiştir">☀</button>
+    <button class="back-to-top" id="backToTop" title="Yukarı Çık">↑</button>
+    <div class="visitor-counter"><span>✦</span> <span id="visitorCount">0</span> ziyaretçi</div>
+
+    <div class="organic-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="flower-decor flower-1">🐾</div>
+    <div class="flower-decor flower-2">★</div>
+    <div class="flower-decor flower-3">✦</div>
+
+    <nav id="navbar">
+        <a href="index.php" class="logo" target="_self">
+            <svg viewBox="0 0 220 70" xmlns="http://www.w3.org/2000/svg" style="height:50px; width:auto;">
+                <defs>
+                    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#2C2C2C"/>
+                        <stop offset="100%" style="stop-color:#2C2C2C"/>
+                    </linearGradient>
+                </defs>
+                <text x="8" y="58" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-style="italic" font-weight="300" fill="url(#logoGrad)">MV</text>
+                <line x1="84" y1="12" x2="84" y2="62" stroke="#f8b2c7" stroke-width="1.2"/>
+                <text x="84" y="36" font-family="sans-serif" font-size="16" fill="#46041e" letter-spacing="3">BABAER</text>
+                <text x="96" y="52" font-family="sans-serif" font-size="8.6" fill="#0a0000" letter-spacing="3">PORTFOLYO</text>
+            </svg>
+        </a>
+
+        <div class="nav-right-cluster">
+            <ul class="nav-links">
+                <?php if(isset($_SESSION['ad_soyad'])): ?>
+                    <li class="welcome-msg">Hoş geldin, <?php echo htmlspecialchars($_SESSION['ad_soyad']); ?></li>
+                <?php endif; ?>
+                <li><a href="index.php" target="_self">Ana Sayfa</a></li>
+                <li><a href="hakkimda.php" target="_self">Hakkımda</a></li>
+                <li><a href="projeler.php" class="active" target="_self">Projeler</a></li>
+                <li><a href="urunler.php" target="_self">Ürünler</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <?php if(isset($_SESSION['ad_soyad'])): ?>
+                    <a href="mesajlar.php" class="nav-icon-link" title="Mesajlar" target="_self">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <span class="nav-badge" id="mesajBadge">0</span>
+                    </a>
+                    <a href="iletisim.php" class="nav-icon-link" title="İletişim" target="_self">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </a>
+                    <a href="favoriler.php" class="nav-icon-link" title="Favoriler" target="_self">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <span class="nav-badge" id="favoriBadge">0</span>
+                    </a>
+                    <a href="sepet.php" class="nav-icon-link" title="Sepet" target="_self">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                        <span class="nav-badge" id="sepetBadge">0</span>
+                    </a>
+                    <a href="cikis.php" class="nav-icon-link" title="Çıkış" style="color: var(--rose-deep);" target="_self">
+                        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    </a>
+                <?php else: ?>
+                    <a href="giris_kayit.php" class="nav-auth-btn btn-signup" target="_self">Giriş / Kayıt</a>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="hamburger">
+            <span></span><span></span><span></span>
+        </label>
+        <label for="menu-toggle" class="menu-overlay"></label>
+
+        <ul class="nav-links mobile-only">
+            <label for="menu-toggle" class="close-menu" title="Menüyü Kapat">✕</label>
+
+            <?php if(isset($_SESSION['ad_soyad'])): ?>
+                <li class="welcome-msg" style="margin-bottom: 1rem;">Hoş geldin, <?php echo htmlspecialchars($_SESSION['ad_soyad']); ?></li>
+            <?php endif; ?>
+            <li><a href="index.php" target="_self">Ana Sayfa</a></li>
+            <li><a href="hakkimda.php" target="_self">Hakkımda</a></li>
+            <li><a href="projeler.php" class="active" target="_self">Projeler</a></li>
+            <li><a href="urunler.php" target="_self">Ürünler</a></li>
+
+            <?php if(!isset($_SESSION['ad_soyad'])): ?>
+                <li><hr style="width: 50%; border: 0; border-top: 1px solid var(--light-gray); margin: 1rem 0;"></li>
+                <li><a href="giris_kayit.php" class="nav-auth-btn btn-signup" target="_self">Giriş / Kayıt</a></li>
+            <?php else: ?>
+                <li><hr style="width: 50%; border: 0; border-top: 1px solid var(--light-gray); margin: 0.6rem 0;"></li>
+                <li style="width:100%; display:flex; flex-direction:column; align-items:center; gap:0.7rem;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; width:220px;">
+                        <a href="mesajlar.php" target="_self" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;padding:0.8rem;background:var(--soft-pink);border-radius:16px;text-decoration:none;color:var(--warm-gray);font-size:0.65rem;letter-spacing:1px;transition:all 0.3s;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            Mesajlar
+                        </a>
+                        <a href="iletisim.php" target="_self" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;padding:0.8rem;background:var(--soft-pink);border-radius:16px;text-decoration:none;color:var(--warm-gray);font-size:0.65rem;letter-spacing:1px;transition:all 0.3s;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            İletişim
+                        </a>
+                        <a href="favoriler.php" target="_self" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;padding:0.8rem;background:var(--soft-pink);border-radius:16px;text-decoration:none;color:var(--warm-gray);font-size:0.65rem;letter-spacing:1px;transition:all 0.3s;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            Favoriler
+                        </a>
+                        <a href="sepet.php" target="_self" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;padding:0.8rem;background:var(--soft-pink);border-radius:16px;text-decoration:none;color:var(--warm-gray);font-size:0.65rem;letter-spacing:1px;transition:all 0.3s;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            Sepet
+                        </a>
+                    </div>
+                    <a href="cikis.php" target="_self" style="display:flex;align-items:center;gap:0.5rem;padding:0.6rem 1.8rem;border-radius:50px;border:1.5px solid var(--dusty-rose);color:var(--rose-deep);text-decoration:none;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Çıkış Yap
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div>
+            <span class="page-greeting">Keşfet</span>
+            <h1 class="page-title">Seçilmiş <span>Projeler</span></h1>
+            <p class="page-subtitle">Her proje benim için bir hikaye. Videolarla ve interaktif deneyimlerle çalışmalarımı keşfedin.</p>
+        </div>
+    </section>
+
+    <section class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn" data-filter="video">Video</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="mobile">Mobil</button>
+        </div>
+    </section>
+
+    <section class="projects-section">
+        <div class="projects-grid">
+
+            <div class="project-card" data-category="video" onclick="openModal('project1')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="_HTML5 ve formlar 10.pdf.mp4" type="video/mp4"></video>
+                    <div class="video-overlay"><span class="video-badge">Video Proje</span></div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Motion Design</span>
+                    <h3 class="project-title">HTML5 ve Formlar</h3>
+                    <p class="project-desc">HTML5 ve formlar konusunu anlatan eğitim videosu. Görsel efektler ve animasyonlarla zenginleştirilmiş içerik.</p>
+                    <div class="project-tech"><span class="tech-tag">After Effects</span><span class="tech-tag">Figma</span><span class="tech-tag">Lottie</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="video" onclick="openModal('project2')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="Aşk Ve Gurur Sunum.mp4" type="video/mp4"></video>
+                    <div class="video-overlay"><span class="video-badge">Video Proje</span></div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Sunum</span>
+                    <h3 class="project-title">Aşk Ve Gurur Sunum</h3>
+                    <p class="project-desc">Aşk ve Gurur kitabının sunumu için hazırlanan video. Görsel efektler ve animasyonlarla zenginleştirilmiş içerik.</p>
+                    <div class="project-tech"><span class="tech-tag">After Effects</span><span class="tech-tag">Figma</span><span class="tech-tag">Lottie</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="video" onclick="openModal('project3')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="Css nedir-13.pdf.mp4" type="video/mp4"></video>
+                    <div class="video-overlay"><span class="video-badge">Video Proje</span></div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Eğitim</span>
+                    <h3 class="project-title">CSS Nedir?</h3>
+                    <p class="project-desc">CSS nedir? konusunu anlatan eğitim videosu. Görsel efektler ve animasyonlarla zenginleştirilmiş içerik.</p>
+                    <div class="project-tech"><span class="tech-tag">After Effects</span><span class="tech-tag">Figma</span><span class="tech-tag">Lottie</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="video" onclick="openModal('project4')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="_ Grafik Örnekleri-CarryMind Projesi.mp4" type="video/mp4"></video>
+                    <div class="video-overlay"><span class="video-badge">Video Proje</span></div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">UI Animation</span>
+                    <h3 class="project-title">Akıllı Zihin Haritası</h3>
+                    <p class="project-desc">Unutulan nesne problemi için yaratılmış akıllı zihin haritası uygulaması. Arayüz animasyonları ve kullanıcı deneyimi tasarımı.</p>
+                    <div class="project-tech"><span class="tech-tag">Principle</span><span class="tech-tag">After Effects</span><span class="tech-tag">Figma</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="video" onclick="openModal('project5')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="video5.mp4" type="video/mp4"></video>
+                    <div class="video-overlay"><span class="video-badge">Video Proje</span></div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Brand Film</span>
+                    <h3 class="project-title">Web Tasarımının Temelleri</h3>
+                    <p class="project-desc">Web tasarımının temel kavramlarını anlatan eğitim videosu. Senaryo, çekim ve post-prodüksiyon süreçleri.</p>
+                    <div class="project-tech"><span class="tech-tag">Premiere Pro</span><span class="tech-tag">DaVinci</span><span class="tech-tag">Audition</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="video" onclick="openModal('project6')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="video6.mp4" type="video/mp4"></video>
+                    <div class="video-overlay"><span class="video-badge">Video Proje</span></div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Motion Graphics</span>
+                    <h3 class="project-title">JavaScript Temelleri</h3>
+                    <p class="project-desc">JavaScript programlama dilinin temellerini anlatan animasyonlu eğitim serisi. İnteraktif örneklerle desteklenmiştir.</p>
+                    <div class="project-tech"><span class="tech-tag">After Effects</span><span class="tech-tag">Illustrator</span><span class="tech-tag">Animate</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="video" onclick="openModal('project7')">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline><source src="video7.mp4" type="video/mp4"></video>
+                    <div class="video-overlay"><span class="video-badge">Video Proje</span></div>
+                    <div class="play-button"></div>
+                </div>
+                <div class="project-info">
+                    <span class="project-category">UI/UX Showcase</span>
+                    <h3 class="project-title">Responsive Tasarım İlkeleri</h3>
+                    <p class="project-desc">Mobil ve masaüstü uyumlu web tasarımının inceliklerini gösteren kapsamlı bir video serisi. Grid sistemleri ve flexbox yapıları.</p>
+                    <div class="project-tech"><span class="tech-tag">Figma</span><span class="tech-tag">After Effects</span><span class="tech-tag">Cinema 4D</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="web" onclick="window.open('https://example.com', '_blank')">
+                <div class="web-preview" style="background: linear-gradient(135deg, var(--mint), var(--sage));">
+                    <div class="browser-mockup"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                    <img src="web1.jpg" alt="Web Project">
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Web Tasarım</span>
+                    <h3 class="project-title">E-Ticaret Platformu</h3>
+                    <p class="project-desc">Modern ve kullanıcı dostu e-ticaret platformu. React ve Node.js ile geliştirilmiş, ödeme entegrasyonları içerir.</p>
+                    <div class="project-tech"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span></div>
+                </div>
+            </div>
+
+            <div class="project-card" data-category="mobile" onclick="window.open('https://example.com', '_blank')">
+                <div class="web-preview" style="background: linear-gradient(135deg, var(--peach), var(--coral));">
+                    <div class="browser-mockup"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                    <img src="mobile1.jpg" alt="Mobile Project">
+                </div>
+                <div class="project-info">
+                    <span class="project-category">Mobil Uygulama</span>
+                    <h3 class="project-title">Which-Görev Analisti</h3>
+                    <p class="project-desc">Günlük görevleriniz için akıllı öneriler sunan mobil uygulama. React Native ve Firebase ile geliştirilmiş.</p>
+                    <div class="project-tech"><span class="tech-tag">React Native</span><span class="tech-tag">Firebase</span><span class="tech-tag">Redux</span></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item"><span class="stat-number" data-target="9">0</span><span class="stat-label">Proje</span></div>
+            <div class="stat-item"><span class="stat-number" data-target="7">0</span><span class="stat-label">Video</span></div>
+            <div class="stat-item"><span class="stat-number" data-target="2">0</span><span class="stat-label">Web</span></div>
+            <div class="stat-item"><span class="stat-number" data-target="50">0</span><span class="stat-label">Mutlu Müşteri</span></div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Birlikte <span>çalışalım</span> mı?</h2>
+            <p>Yeni bir proje mi düşünüyorsunuz? Fikirlerinizi hayata geçirmek için sabırsızlanıyorum.</p>
+            <a href="iletisim.php" class="cta-button" target="_self">İletişime Geç</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="quote-container">
+            <p class="rotating-quote active" id="quote1">"Yaratmak, ruhun nefes almasıdır"</p>
+            <p class="rotating-quote" id="quote2">"Tasarım, görünmeyeni görünür kılmaktır"</p>
+            <p class="rotating-quote" id="quote3">"Detaylar, mükemmelliğin mimarıdır"</p>
+            <p class="rotating-quote" id="quote4">"Kod şiir, tasarım duygudur"</p>
+        </div>
+        <p>&copy; 2024 vildanbabaer. Tüm hakları saklıdır.</p>
+        <p class="footer-hearts">✦ ✧ ✦</p>
+    </footer>
+
+    <div class="video-modal" id="videoModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal(event)">✕</div>
+            <div class="modal-video">
+                <video id="modalVideo" controls><source src="" type="video/mp4"></video>
+            </div>
+            <div class="modal-info">
+                <h3 id="modalTitle">Proje Başlığı</h3>
+                <p id="modalDesc">Proje açıklaması buraya gelecek.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') { html.setAttribute('data-theme','dark'); themeToggle.textContent = '☾'; }
+        themeToggle.addEventListener('click', () => {
+            const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☾' : '☀';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Back to Top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => { window.scrollY > 500 ? backToTop.classList.add('visible') : backToTop.classList.remove('visible'); });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Falling Petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = ['✦','✧','⋆','★'][Math.floor(Math.random()*4)];
+            petal.style.left = Math.random()*100+'vw';
+            petal.style.fontSize = (Math.random()*15+10)+'px';
+            petal.style.animationDuration = (Math.random()*5+5)+'s';
+            petal.style.color = ['var(--dusty-rose)','var(--lavender-deep)','var(--peach-deep)','var(--sage)'][Math.floor(Math.random()*4)];
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 10000);
+        }
+        setInterval(createPetal, 3000);
+
+        // Visitor Counter
+        let count = localStorage.getItem('visitorCount');
+        count = count ? parseInt(count)+1 : Math.floor(Math.random()*1000)+500;
+        localStorage.setItem('visitorCount', count);
+        document.getElementById('visitorCount').textContent = count;
+
+        // Rotating Quotes
+        const quotes = document.querySelectorAll('.rotating-quote');
+        let currentQuote = 0;
+        setInterval(() => { quotes[currentQuote].classList.remove('active'); currentQuote = (currentQuote+1)%quotes.length; quotes[currentQuote].classList.add('active'); }, 5000);
+
+        // Video Modal
+        const projectData = {
+            'project1': { title: 'HTML5 ve Formlar', desc: 'HTML5 ve formlar konusunu anlatan eğitim videosu.', video: '_HTML5 ve formlar 10.pdf.mp4' },
+            'project2': { title: 'Aşk Ve Gurur Sunum', desc: 'Aşk ve Gurur kitabının sunumu için hazırlanan video.', video: 'Aşk Ve Gurur Sunum.mp4' },
+            'project3': { title: 'CSS Nedir?', desc: 'CSS nedir? konusunu anlatan eğitim videosu.', video: 'Css nedir-13.pdf.mp4' },
+            'project4': { title: 'Akıllı Zihin Haritası', desc: 'Unutulan nesne problemi için yaratılmış akıllı zihin haritası uygulaması.', video: '_ Grafik Örnekleri-CarryMind Projesi.mp4' },
+            'project5': { title: 'Web Tasarımının Temelleri', desc: 'Web tasarımının temel kavramlarını anlatan eğitim videosu.', video: 'video5.mp4' },
+            'project6': { title: 'JavaScript Temelleri', desc: 'JavaScript programlama dilinin temellerini anlatan animasyonlu eğitim serisi.', video: 'video6.mp4' },
+            'project7': { title: 'Responsive Tasarım İlkeleri', desc: 'Mobil ve masaüstü uyumlu web tasarımının inceliklerini gösteren kapsamlı bir video serisi.', video: 'video7.mp4' }
+        };
+
+        function openModal(projectId) {
+            event.stopPropagation();
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            const data = projectData[projectId];
+            if (data) {
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalDesc').textContent = data.desc;
+                video.querySelector('source').src = data.video;
+                video.load();
+                modal.classList.add('active');
+                video.play();
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(event) {
+            event.stopPropagation();
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            if (event.target === modal || event.target.closest('.modal-close')) {
+                modal.classList.remove('active');
+                video.pause();
+                video.currentTime = 0;
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                projectCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = 'flex';
+                        setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0) scale(1)'; }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px) scale(0.95)';
+                        setTimeout(() => { card.style.display = 'none'; }, 400);
+                    }
+                });
+            });
+        });
+
+        // Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.classList.contains('stat-item')) {
+                        const numberEl = entry.target.querySelector('.stat-number');
+                        const target = parseInt(numberEl.getAttribute('data-target'));
+                        let current = 0;
+                        const increment = target / 30;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) { numberEl.textContent = target; clearInterval(timer); }
+                            else numberEl.textContent = Math.floor(current);
+                        }, 50);
+                    }
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        ['.filter-buttons','.project-card','.stat-item','.cta-section','footer'].forEach(sel => {
+            document.querySelectorAll(sel).forEach(el => observer.observe(el));
+        });
+
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { window.scrollY > 50 ? navbar.classList.add('scrolled') : navbar.classList.remove('scrolled'); });
+
+        // Mobil menü
+        const menuToggle = document.getElementById('menu-toggle');
+        menuToggle.addEventListener('change', function() { document.body.style.overflow = this.checked ? 'hidden' : ''; });
+        document.querySelectorAll('.nav-links.mobile-only a, .menu-overlay').forEach(link => {
+            link.addEventListener('click', () => { menuToggle.checked = false; document.body.style.overflow = ''; });
+        });
+
+        // Mouse Parallax
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.querySelectorAll('.blob').forEach((blob, i) => {
+                const speed = (i+1)*15;
+                blob.style.transform = `translate(${x*speed}px, ${y*speed}px)`;
+            });
+        });
+
+        // Escape modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('videoModal');
+                const video = document.getElementById('modalVideo');
+                modal.classList.remove('active');
+                video.pause();
+                video.currentTime = 0;
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Video viewport observer
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { entry.isIntersecting ? entry.target.play() : entry.target.pause(); });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.video-container video').forEach(v => videoObserver.observe(v));
+    </script>
+
+    <script src="urunler.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof UrunlerApp !== 'undefined') {
+                UrunlerApp.temaYukle();
+                UrunlerApp.badgeYukle();
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) themeToggle.addEventListener('click', () => { if (typeof UrunlerApp !== 'undefined') UrunlerApp.temaToggle(); });
+            }
+        });
+    </script>
+</body>
+</html>
