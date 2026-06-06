@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "ad": "Web Tasarım Paketi",
+    "kategori": "web",
+    "aciklama": "Modern, responsive ve SEO uyumlu web sitesi tasarımı. 5 sayfa, mobil uyumlu, temel SEO optimizasyonu içerir.",
+    "fiyat": 2500,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&h=300&fit=crop",
+    "etiketler": ["HTML5", "CSS3", "Responsive"],
+    "stok": 10
+  },
+  {
+    "id": 2,
+    "ad": "UI/UX Tasarım Danışmanlığı",
+    "kategori": "tasarim",
+    "aciklama": "Kullanıcı deneyimi analizi, wireframe oluşturma ve prototip tasarımı. Figma dosyası teslim edilir.",
+    "fiyat": 1800,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop",
+    "etiketler": ["Figma", "Prototip", "UX"],
+    "stok": 5
+  },
+  {
+    "id": 3,
+    "ad": "E-Ticaret Sitesi Geliştirme",
+    "kategori": "web",
+    "aciklama": "Tam donanımlı e-ticaret platformu. Ödeme entegrasyonu, ürün yönetimi ve admin paneli içerir.",
+    "fiyat": 5500,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
+    "etiketler": ["React", "Node.js", "MongoDB"],
+    "stok": 3
+  },
+  {
+    "id": 4,
+    "ad": "Sosyal Medya Görsel Paketi",
+    "kategori": "tasarim",
+    "aciklama": "Instagram, Facebook ve Twitter için 30 adet özel tasarım görseller. Marka kimliğinize uygun.",
+    "fiyat": 900,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=300&fit=crop",
+    "etiketler": ["Photoshop", "Canva", "Sosyal Medya"],
+    "stok": 20
+  },
+  {
+    "id": 5,
+    "ad": "Logo ve Marka Kimliği",
+    "kategori": "marka",
+    "aciklama": "Profesyonel logo tasarımı, kartvizit, antetli kağıt ve marka rehberi. 3 revizyon hakkı.",
+    "fiyat": 1200,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&h=300&fit=crop",
+    "etiketler": ["Illustrator", "Marka", "Logo"],
+    "stok": 8
+  },
+  {
+    "id": 6,
+    "ad": "JavaScript Eğitim Videosu",
+    "kategori": "egitim",
+    "aciklama": "Temel JavaScript konseptlerini anlatan 10 bölümlük video serisi. Kaynak kodları dahil.",
+    "fiyat": 450,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=400&h=300&fit=crop",
+    "etiketler": ["JavaScript", "Eğitim", "Video"],
+    "stok": 50
+  },
+  {
+    "id": 7,
+    "ad": "Mobil Uygulama UI Kiti",
+    "kategori": "tasarim",
+    "aciklama": "iOS ve Android için 50+ ekran tasarımı. Figma'da düzenlenebilir, otomatik layout destekli.",
+    "fiyat": 750,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop",
+    "etiketler": ["Figma", "Mobile", "UI Kit"],
+    "stok": 15
+  },
+  {
+    "id": 8,
+    "ad": "SEO ve Performans Optimizasyonu",
+    "kategori": "web",
+    "aciklama": "Mevcut sitenizin hız, SEO ve erişilebilirlik analizi. Rapor ve iyileştirme önerileri.",
+    "fiyat": 1100,
+    "paraBirimi": "₺",
+    "resim": "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400&h=300&fit=crop",
+    "etiketler": ["SEO", "Analytics", "Performans"],
+    "stok": 6
+  }
+]
