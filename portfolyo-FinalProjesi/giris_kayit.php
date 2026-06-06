@@ -1,0 +1,281 @@
+<?php
+session_start();
+require 'baglanti.php';
+
+$mesaj = '';
+// Sayfa yüklendiğinde varsayılan olarak hangi formun açık kalacağını belirler
+$aktif_form = 'giris'; 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    // === KAYIT OL İŞLEMİ ===
+    if (isset($_POST['kayit_ol'])) {
+        $aktif_form = 'kayit'; // Hata olursa kayıt formu açık kalsın
+        $ad_soyad = $_POST['ad_soyad'];
+        $email = $_POST['email'];
+        $sifre = password_hash($_POST['sifre'], PASSWORD_DEFAULT);
+
+        $kontrol = $db->prepare("SELECT * FROM kullanicilar WHERE email = ?");
+        $kontrol->execute([$email]);
+        
+        if ($kontrol->rowCount() > 0) {
+            $mesaj = "<div class='mesaj hata'>Bu e-posta adresi zaten kayıtlı!</div>";
+        } else {
+            $ekle = $db->prepare("INSERT INTO kullanicilar (ad_soyad, email, sifre) VALUES (?, ?, ?)");
+            if ($ekle->execute([$ad_soyad, $email, $sifre])) {
+                $mesaj = "<div class='mesaj basari'>Kayıt başarılı! Şimdi giriş yapabilirsiniz.</div>";
+                $aktif_form = 'giris'; // Kayıt başarılıysa girişe yönlendir
+            } else {
+                $mesaj = "<div class='mesaj hata'>Kayıt olurken bir hata oluştu.</div>";
+            }
+        }
+    } 
+    // === GİRİŞ YAP İŞLEMİ ===
+    elseif (isset($_POST['giris_yap'])) {
+        $aktif_form = 'giris'; // Hata olursa giriş formu açık kalsın
+        $email = $_POST['email'];
+        $sifre = $_POST['sifre'];
+
+        $sorgu = $db->prepare("SELECT * FROM kullanicilar WHERE email = ?");
+        $sorgu->execute([$email]);
+        $kullanici = $sorgu->fetch(PDO::FETCH_ASSOC);
+
+        if ($kullanici && password_verify($sifre, $kullanici['sifre'])) {
+            $_SESSION['kullanici_id'] = $kullanici['id'];
+            $_SESSION['ad_soyad'] = $kullanici['ad_soyad'];
+            
+            // Kullanıcı giriş yaptı bilgisini tarayıcıya (localStorage) gönderiyoruz
+            echo "<script>
+                localStorage.setItem('kullaniciGirisYapti', 'evet');
+                window.location.href = 'index.php'; // Giriş sonrası ana sayfaya veya sepete yönlendir
+            </script>";
+            exit;
+        } else {
+            $mesaj = "<div class='mesaj hata'>E-posta veya şifre hatalı!</div>";
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş & Kayıt — Vildan Babaer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --cream: #FFFCF8; 
+            --dusty-rose: #f596b1; 
+            --lavender-deep: #c09dd0; 
+            --charcoal: #2C2C2C; 
+            --light-gray: #E8E8E8; 
+            --warm-gray: #6B6B6B; 
+            --sage: #B8D4C0;
+        }
+        
+        * { box-sizing: border-box; }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--cream); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px;
+        }
+
+        .form-kutusu { 
+            background: white; 
+            padding: 2.5rem; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden;
+        }
+
+        h2 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 2.2rem; 
+            color: var(--charcoal); 
+            margin-bottom: 1.5rem; 
+        }
+        
+        /* Sekme Butonları */
+        .sekmeler { 
+            display: flex; 
+            justify-content: center; 
+            margin-bottom: 2rem; 
+            border-bottom: 2px solid var(--light-gray); 
+        }
+        
+        .sekme-btn {
+            background: none; 
+            border: none; 
+            padding: 10px 15px; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem; 
+            color: var(--warm-gray); 
+            cursor: pointer; 
+            transition: all 0.3s;
+            position: relative; 
+            outline: none; 
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .sekme-btn.aktif { color: var(--dusty-rose); }
+        .sekme-btn.aktif::after {
+            content: ''; 
+            position: absolute; 
+            bottom: -2px; 
+            left: 0; 
+            width: 100%; 
+            height: 2px;
+            background: var(--dusty-rose);
+        }
+
+        /* Form Yapısı */
+        .form-icerik { display: none; animation: fadeIn 0.4s ease; }
+        .form-icerik.aktif { display: block; }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        input { 
+            width: 100%; 
+            padding: 12px 20px; 
+            margin-bottom: 15px; 
+            border: 1px solid var(--light-gray); 
+            border-radius: 25px; 
+            outline: none; 
+            font-family: 'Montserrat', sans-serif; 
+            transition: all 0.3s; 
+            font-size: 16px; /* Mobil tarayıcılarda zoom yapmasını engeller */
+        }
+        
+        input:focus { border-color: var(--dusty-rose); }
+        
+        button[type="submit"] { 
+            width: 100%; 
+            padding: 14px; 
+            background: linear-gradient(135deg, var(--dusty-rose), var(--lavender-deep)); 
+            color: white; 
+            border: none; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 1rem; 
+            transition: transform 0.3s; 
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        button[type="submit"]:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 5px 15px rgba(232, 165, 184, 0.4); 
+        }
+        
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+        
+        /* Mesajlar */
+        .mesaj { 
+            margin-bottom: 15px; 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            padding: 12px; 
+            border-radius: 12px; 
+        }
+        .mesaj.hata { color: #D4849C; background: rgba(212, 132, 156, 0.1); }
+        .mesaj.basari { color: #7A9E84; background: rgba(184, 212, 192, 0.1); }
+        
+        .geri-don { 
+            display: inline-block; 
+            margin-top: 20px; 
+            color: var(--warm-gray); 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            transition: color 0.3s; 
+        }
+        .geri-don:hover { color: var(--dusty-rose); }
+
+        /* Mobil Düzenlemeler */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+                align-items: center; /* Mobilde de dikeyde ortalıyoruz */
+            }
+            .form-kutusu {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            .sekme-btn {
+                font-size: 0.85rem;
+                padding: 10px 5px;
+            }
+            input {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-kutusu">
+        
+        <div class="sekmeler">
+            <button class="sekme-btn <?php echo $aktif_form == 'giris' ? 'aktif' : ''; ?>" onclick="formDegistir('giris', event)">Giriş Yap</button>
+            <button class="sekme-btn <?php echo $aktif_form == 'kayit' ? 'aktif' : ''; ?>" onclick="formDegistir('kayit', event)">Kayıt Ol</button>
+        </div>
+
+        <?php if($mesaj != '') echo $mesaj; ?>
+
+        <div id="giris-formu" class="form-icerik <?php echo $aktif_form == 'giris' ? 'aktif' : ''; ?>">
+            <form method="POST" action="">
+                <input type="email" name="email" placeholder="E-posta Adresiniz" required>
+                <input type="password" name="sifre" placeholder="Şifreniz" required>
+                <button type="submit" name="giris_yap">Giriş Yap</button>
+            </form>
+        </div>
+
+        <div id="kayit-formu" class="form-icerik <?php echo $aktif_form == 'kayit' ? 'aktif' : ''; ?>">
+            <form method="POST" action="">
+                <input type="text" name="ad_soyad" placeholder="Adınız Soyadınız" required>
+                <input type="email" name="email" placeholder="E-posta Adresiniz" required>
+                <input type="password" name="sifre" placeholder="Şifreniz" required>
+                <button type="submit" name="kayit_ol">Hesap Oluştur</button>
+            </form>
+        </div>
+
+        <a href="index.php" class="geri-don">← Ana Sayfaya Dön</a>
+    </div>
+
+    <script>
+        // Formlar arası geçişi sağlayan JavaScript
+        function formDegistir(formTipi, event) {
+            // Buton aktifliklerini ayarla
+            document.querySelectorAll('.sekme-btn').forEach(btn => btn.classList.remove('aktif'));
+            event.currentTarget.classList.add('aktif');
+
+            // Form görünürlüklerini ayarla
+            document.querySelectorAll('.form-icerik').forEach(form => form.classList.remove('aktif'));
+            document.getElementById(formTipi + '-formu').classList.add('aktif');
+            
+            // Eğer varsa PHP'den gelen mesajı geçişte gizle (karışıklık olmasın)
+            const mesajKutusu = document.querySelector('.mesaj');
+            if(mesajKutusu) mesajKutusu.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
